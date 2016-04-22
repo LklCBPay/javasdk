@@ -1,4 +1,5 @@
 #Read me
+[![Build Status](https://travis-ci.org/lklcrossboard/javasdk.svg?branch=master)](https://travis-ci.org/lklcrossboard/javasdk)
 ## 拉卡拉跨境支付平台后台接口java-sdk使用指南
 *开发者可将该sdk包设置在项目类路径中以使用该sdk方便接入拉卡拉跨境支付平台后台接口* 
 
