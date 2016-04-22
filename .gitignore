@@ -1,0 +1,17 @@
+# Created by .ignore support plugin (hsz.mobi)
+# IntelliJ project files
+.idea/*.*
+*.iml
+
+gen### Java template
+*.class
+
+#target#
+/target
+
+# Package Files #
+*.jar
+
+#properties#
+/src/main/resources/lklconfig.properties
+
