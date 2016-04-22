@@ -4,7 +4,7 @@
 
 ![v3.3](https://img.shields.io/badge/Version-v3.4-blue.svg)
 
-*有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/edit/master/README.md)*
+*有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/issues)*
 
 
 
