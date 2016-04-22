@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!--<aop:aspectj-autoproxy/>-->
+    <context:component-scan base-package="com.lakala.crosspay"/>
+
+    <bean id="appProperty"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:lklconfig.properties</value>
+            </array>
+        </property>
+    </bean>
+    <bean id="yamlMap" class="org.springframework.beans.factory.config.YamlMapFactoryBean">
+        <property name="resources">
+            <list>
+                <value>classpath:lklcrosspay.yml</value>
+            </list>
+        </property>
+        <property name="resolutionMethod" value="FIRST_FOUND"/>
+    </bean>
+
+    <!--<bean id="lklMsgHelperInceptor" name="lklMsgHelperInceptor" class="com.lakala.crosspay.client.util.LklMsgHelper"/>-->
+    <!--<aop:config proxy-target-class="true">-->
+    <!--<aop:advisor advice-ref="lklMsgHelperInceptor" pointcut-ref="lklmsgHelper"/>-->
+    <!--<aop:aspect ref="lklCbPayClient">-->
+    <!--<aop:pointcut id="lklmsgHelper" expression="execution(* com.lakala.crosspay.*.LklCbPayClient.*(..))"/>-->
+    <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+    <import resource="client-message.xml"/>
+</beans>

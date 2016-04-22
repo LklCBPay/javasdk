@@ -1,0 +1,6 @@
+sandbox:
+    server: http://180.166.12.105
+    port: 8080
+live:
+    server: https://intl.lakala.com
+    port: 7777
