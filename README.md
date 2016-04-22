@@ -35,6 +35,7 @@ defaultMaxPerRoute=200
 ```java
 LklCrossPayEnv.registerEnv(LklEnv.SANDBOX, merId, privKey, pubKey);
 ```
+LklEnv.SANDBOX-拉卡拉服务器环境。LklEnv.SANDBOX以及LklEnv.LIVE。live环境为生产环境
 
 merId-拉卡拉跨境支付平台商户号
 
