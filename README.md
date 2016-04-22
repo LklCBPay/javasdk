@@ -13,7 +13,7 @@
 
 ----
 ### sdk项目说明
-* 在项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
+* 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
 ``` 
 #连接超时时间，毫秒
@@ -31,7 +31,7 @@ defaultMaxPerRoute=200
    * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的对接方法
 
 
-### 接口对接说明
+## 接口对接说明
 * 开发者在对接之前需注册对接环境
 
 ```java
