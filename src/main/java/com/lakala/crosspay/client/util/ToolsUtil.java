@@ -18,7 +18,7 @@ public class ToolsUtil {
      * @return
      */
     private static String getRandomString(int length) {
-        String radStr = "0eA1lB3oC2pD4e5E8rF6Gg9HI7Jc8KkLrMaNmOsPQRSTbUVuWXYiZ";
+        String radStr = "w0eA*1l&Bht3oCz^2p-D=n45%Ev8F6+Gg$9jHxdI7Ev8F6+Gg$9jHxdI\7Jc8KkLrMyaNq@mOsP#QR/!STbUVuWXfYiZ~w0eA*1l&Bht3oCz^2Jc8KkLrMyaNq@mOsP#QR!STbUVuWXfYiZ~w0eA*1l&Bht3oCz^2p-D=n45%ÍÍp-D=n45%Ev8F6+Gg$9jHxdI7Jc8KkLrMyaNq@mOsP#QR!STbUVuWXfYiZ~";
         StringBuffer generateRandStr = new StringBuffer();
         Random rand = new Random();
         for (int i = 0; i < length; i++) {
@@ -46,6 +46,10 @@ public class ToolsUtil {
 
     public static void remove() {
         LOCAL_MERKEY.remove();
+    }
+
+    public static void main(String[] args) {
+        System.err.print(getRandomString(32));
     }
 }
 

@@ -1,4 +1,6 @@
 import com.lakala.crosspay.client.LklCbPayClient;
+import com.lakala.crosspay.client.LklCbPayQueryClient;
+import com.lakala.crosspay.client.LklCbPaySignClient;
 import com.lakala.crosspay.client.entities.LklCrossPaySuperReq;
 import com.lakala.crosspay.client.entities.gather.LklGatherReq;
 import com.lakala.crosspay.client.entities.gather.LklGatherRes;
@@ -8,6 +10,15 @@ import com.lakala.crosspay.client.entities.payAgent.LklPayAgentReq;
 import com.lakala.crosspay.client.entities.payAgent.LklPayAgentRes;
 import com.lakala.crosspay.client.entities.payment.PaymentReq;
 import com.lakala.crosspay.client.entities.payment.PaymentRes;
+import com.lakala.crosspay.client.entities.query.*;
+import com.lakala.crosspay.client.entities.recon.ReconSubscribeReq;
+import com.lakala.crosspay.client.entities.recon.ReconSubscribeRes;
+import com.lakala.crosspay.client.entities.refund.RefundReq;
+import com.lakala.crosspay.client.entities.refund.RefundRes;
+import com.lakala.crosspay.client.entities.sign.SignReq;
+import com.lakala.crosspay.client.entities.sign.SignRes;
+import com.lakala.crosspay.client.entities.sign.SignVerifyReq;
+import com.lakala.crosspay.client.entities.sign.SignVerifyRes;
 import com.lakala.crosspay.client.entities.submit.SubmitOrderReq;
 import com.lakala.crosspay.client.entities.submit.SubmitOrderRes;
 import com.lakala.crosspay.client.enums.CertType;
@@ -16,7 +27,6 @@ import com.lakala.crosspay.client.enums.LklCurrency;
 import com.lakala.crosspay.client.enums.LklEnv;
 import com.lakala.crosspay.client.util.DateUtil;
 import com.lakala.crosspay.client.util.LklCrossPayEnv;
-import com.lakala.crosspay.client.util.LklCrossPayRestfulClent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,6 +51,12 @@ public class LklCrossPayClientTest {
     @Autowired
     private LklCbPayClient payClient;
 
+    @Autowired
+    private LklCbPayQueryClient queryClient;
+
+    @Autowired
+    private LklCbPaySignClient signClient;
+
     @Before
     public void testSetUp() {
         //注册应用环境
@@ -50,7 +66,7 @@ public class LklCrossPayClientTest {
     }
 
     /**
-     * 商户提交订单
+     * 商户订交订单
      */
     @Test
     public void tetsSubmitOrder() {
@@ -60,13 +76,13 @@ public class LklCrossPayClientTest {
         req.setBgUrl("http://baidu.com");
         req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
         req.setCertType(CertType.ID.getCode());
-        req.setClientId("360803198005055579");
-        req.setClientName("孙克斌");
+        req.setClientId("360000000000000000");
+        req.setClientName("孙xx");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
         req.setIsMergeSign("1");
-        req.setMerOrderId("SH20160420194553");
+        req.setMerOrderId("SH20160420194753");
         req.setMobile("13651234567");
         req.setOrderAmount("223123.09");
         req.setOrderEffTime("20160422194550");
@@ -102,12 +118,12 @@ public class LklCrossPayClientTest {
     public void testPayment() {
 
         PaymentReq payOrder = new PaymentReq();
-        payOrder.setMerOrderId("SH20160420194552");
+        payOrder.setMerOrderId("SH20160420194753");
         payOrder.setOrderAmount("223123.09");
         payOrder.setCurrency(LklCurrency.CNY.getCode());
         payOrder.setPayeeAmount("123123.09");
         payOrder.setMsgCode("111111");
-        payOrder.setTransactionId("2016042100084649");
+        payOrder.setTransactionId("2016042500084727");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setVer("1.0.0");
@@ -121,7 +137,7 @@ public class LklCrossPayClientTest {
     }
 
     /**
-     * 支付短信验证码重新发送
+     * 支付短信 证码重新发送
      */
     @Test
     public void testSendOtp() {
@@ -151,8 +167,8 @@ public class LklCrossPayClientTest {
         req.setBgUrl("http://baidu.com");
         req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
         req.setCertType(CertType.ID.getCode());
-        req.setClientId("360803198005055579");
-        req.setClientName("孙克斌");
+        req.setClientId("360000000000000000");
+        req.setClientName("孙xx");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
@@ -193,19 +209,21 @@ public class LklCrossPayClientTest {
         LklPayAgentReq req = new LklPayAgentReq();
 
         req.setInterBankCode("6222021001116245702");
+        req.setPayTypeId("5");
         req.setBgUrl("http://baidu.com");
         req.setCertType(CertType.ID.getCode());
-        req.setClientId("360803198005055579");
-        req.setAccountName("孙克斌");
+        req.setClientId("360000000000000000");
+        req.setAccountName("孙xx");
+        req.setAccountNumber("6222021001116245702");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
-        req.setMerOrderId("SH20160420194563");
+        req.setMerOrderId("SH20160430195553");
         req.setMobile("13651234567");
-        req.setOrderAmount("223123.09");
-        req.setOrderEffTime("20160422194550");
+        req.setOrderAmount("0.02");
+        req.setOrderEffTime("20160426094550");
         req.setOrderSummary("111312");
-        req.setOrderTime("20160420194550");
+        req.setOrderTime("20160425094450");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setVer("2.0.0");
@@ -217,4 +235,191 @@ public class LklCrossPayClientTest {
         logger.debug("单笔实时代付={}", res);
 
     }
+
+    /**
+     * 汇率查询
+     */
+    @Test
+    public void testExchangeRateQuery() {
+        ExchangeRateQueryReq req = new ExchangeRateQueryReq();
+        req.setCurrency(LklCurrency.AUD.getCode());
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("1.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0001");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        ExchangeRateQueryRes res = queryClient.exchangeRateQuery(req, head);
+
+        logger.debug("汇率查询结果={}", res);
+    }
+
+    /**
+     * 订单查询
+     */
+    @Test
+    public void testOrderQuery() {
+        OrderQueryReq req = new OrderQueryReq();
+        req.setMerOrderId("SH20160420194553");
+        req.setTransactionId("2016042100084651");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("1.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0007");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        OrderQueryRes res = queryClient.orderQuery(req, head);
+
+        logger.debug("订单查询结果={}", res);
+    }
+
+    /**
+     * 签约查询
+     */
+    @Test
+    public void testSignQuery() {
+        SignQueryReq req = new SignQueryReq();
+        req.setCardNo("6222021001116245702");
+        req.setClientName("孙xx");
+        req.setClientId("360000000000000000");
+        req.setCertType(CertType.ID.getCode());
+        req.setMobile("13651234567");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("1.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0009");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        SignQueryRes res = queryClient.signQuery(req, head);
+
+        logger.debug("签约查询结果={}", res);
+
+    }
+
+    /**
+     * 单笔实时代付状态查询
+     */
+    @Test
+    public void testAgentpayStausQuery() {
+        AgentPayStatusQueryReq req = new AgentPayStatusQueryReq();
+        req.setMerOrderId("SH20160420195553");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("2.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        AgentPayStatusQueryRes res = queryClient.agentPayStatusQuery(req, head);
+        logger.debug("单笔实时代付状态查询={}", res);
+    }
+
+    /**
+     * 商户代付账户余额查询
+     */
+    @Test
+    public void testAgentPayBalanceQuery() {
+        AgentPayAcctBalanceQueryReq req = new AgentPayAcctBalanceQueryReq();
+        req.setCurrency(LklCurrency.CNY.getCode());
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("2.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        AgentPayAcctBalanceQueryRes res = queryClient.agentPayAcctBalanceQuery(req, head);
+        logger.debug("商户代付账户余额查询={}", res);
+    }
+
+    /**
+     * 退款接口
+     */
+    @Test
+    public void testRefund() {
+        RefundReq req = new RefundReq();
+        req.setMerOrderId("SH20160420194753");
+        req.setSeqId("WH20160430195553");
+        req.setCurrency(LklCurrency.CNY.getCode());
+        req.setOrderAmount("0.02");
+        req.setRetTime(DateUtil.getCurrentTime());
+        req.setRetAmt("0.02");
+        req.setRetCny(LklCurrency.CNY.getCode());
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0006");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        RefundRes res = payClient.refun(req, head);
+        logger.debug("退款接口={}", res);
+    }
+
+    /**
+     * 用户签约
+     */
+    @Test
+    public void testSign() {
+        SignReq req = new SignReq();
+        req.setCardNo("6222021001116245702");
+        req.setClientName("孙xx");
+        req.setCertType(CertType.ID.getCode());
+        req.setClientId("360000000000000000");
+        req.setDateOfExpire("1602");
+        req.setMobile("13651234567");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0010");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        SignRes res = signClient.sign(req, head);
+        logger.debug("用户签约={}", res);
+
+    }
+
+    /**
+     * 用户签约验证
+     */
+    @Test
+    public void testSignVerify() {
+        SignVerifyReq req = new SignVerifyReq();
+
+        req.setCardNo("6222021001116245702");
+        req.setClientName("孙xx");
+        req.setCertType(CertType.ID.getCode());
+        req.setClientId("360000000000000000");
+        req.setMobile("13651234567");
+        req.setSmsCode("111111");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0011");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        SignVerifyRes res = signClient.signVerify(req, head);
+        logger.debug("用户签约验证={}", res);
+    }
+
+    /**
+     * 对账文件预约下载
+     */
+    @Test
+    public void testReconSubscribe() {
+        ReconSubscribeReq req = new ReconSubscribeReq();
+        req.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+        req.setStartDate("20160415");
+        req.setEndDate("20160425");
+        req.setNotifyAddr("http://baidu.com");
+
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setTs(DateUtil.getCurrentTime());
+        head.setReqType("B0008");
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        ReconSubscribeRes res = payClient.reconSubscribe(req, head);
+        logger.debug("对账文件预约下载={}", res);
+    }
+
 }

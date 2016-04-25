@@ -5,13 +5,14 @@ import java.util.Date;
 
 /**
  * <p>
- *     日期类工具
+ * 日期类 具
  * </p>
+ *
  * @author jiangzhifei jiangzhifei@lakala.com
  */
 public class DateUtil {
     private static String ymdhms = "yyyyMMddHHmmssssssss";
-    public static SimpleDateFormat yyyyMMddHHmmssssssss = new SimpleDateFormat(ymdhms);
+    private static SimpleDateFormat yyyyMMddHHmmssssssss = new SimpleDateFormat(ymdhms);
 
     /**
      * 获得当前时间
@@ -22,5 +23,21 @@ public class DateUtil {
     public static String getCurrentTime() {
 
         return yyyyMMddHHmmssssssss.format(new Date());
+    }
+
+    /**
+     * 返回一个格式化的日期字符串
+     *
+     * @param pattern 日期格式，若为空则默认为yyyyMMdd
+     * @return
+     */
+    public String getCurrentDate(String pattern) {
+        SimpleDateFormat datePattern = null;
+        if (null == pattern || "".equals(pattern)) {
+            datePattern = new SimpleDateFormat("yyyyMMdd");
+        } else {
+            datePattern = new SimpleDateFormat(pattern);
+        }
+        return datePattern.format(new Date());
     }
 }

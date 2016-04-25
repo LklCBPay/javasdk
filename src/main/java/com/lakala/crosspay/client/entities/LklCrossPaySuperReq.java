@@ -13,9 +13,9 @@ public class LklCrossPaySuperReq implements Serializable {
     private static final long serialVersionUID = 2755358811399044775L;
 
     /**
-     * 报文协议版本号
+     * 报文协议版本号,默认为1.0.0
      */
-    private String ver;
+    private String ver = "1.0.0";
     /**
      * 商户号
      */

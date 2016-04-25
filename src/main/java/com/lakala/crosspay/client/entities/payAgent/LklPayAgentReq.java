@@ -21,7 +21,7 @@ public class LklPayAgentReq implements Serializable {
     /**
      * 支付方式:5代付
      */
-    private String payTypeId;
+    private String payTypeId = "5";
 
     /**
      * 订单币种，目前只支持人民币 {@link com.lakala.crosspay.client.enums.LklCurrency}
