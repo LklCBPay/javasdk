@@ -14,7 +14,7 @@
         * java 1.6+
         * maven
 ---------------
-### sdk项目说明
+### sdk集成指南
 * 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
 ``` 
@@ -31,6 +31,28 @@ defaultMaxPerRoute=200
 * 此sdk是maven项目，目录符合maven目录风格。
    * /src/test/java目中的文件为接口测试文件。
    * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的对接方法
+* 开发者需在自己项目中引入sdk开发包spring配置
+```xml
+ <import resource="classpath*:client-application.xml"/>
+```
+`对于引入拉卡拉跨境的client-application.xml的特别说明`
+>若需要启用sdk包中监听拉卡拉跨境回调商户的接口需对springmvc做配置
+
+>1.若商户已有配置springmvc的配置文件且开启了 ```<mvc:annotation-driven/>``` ，则需在该语句前添加
+```xml
+<import resource="classpath*:client-application.xml"/>
+```
+>2.若商户未配置springmvc，则首先需对自己的spring xml配置文件添加namespace以及schemaLocation，如下
+> ``` xmlns:mvc="http://www.springframework.org/schema/mvc" ```
+
+> ``` http://www.springframework.org/schema/mvc ```
+> ``` http://www.springframework.org/schema/mvc/spring-mvc.xsd ```
+
+>添加如上语句后，在自己spring配置文件中添加 
+```xml
+<import resource="classpath*:client-application.xml"/>
+```
+> 如无需启用sdk包中监听拉卡拉跨境回调则直接在自己项目中引入sdk开发包spring配置即可
 
 
 ## 接口对接说明
