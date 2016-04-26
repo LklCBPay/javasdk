@@ -77,8 +77,8 @@ pubKey-拉卡拉跨境支付平台下发公钥
 
 ```java
 SubmitOrderReq req = new SubmitOrderReq();
-req.setCardNo("6222021001116245702");
-req.setBgUrl("http://baidu.com");
+req.setCardNo("6222000000000000000");
+req.setBgUrl("http://merchantDomain:port/merchantApplicationContext/lklpayResult/handle");
 req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
 req.setCertType(CertType.ID.getCode());
 req.setClientId("321000000000000000");
@@ -157,8 +157,8 @@ LklOtpRes res = payClient.sendOtp(req, head);
 ```java
 LklGatherReq req = new LklGatherReq();
 
-req.setCardNo("6222021001116245702");
-req.setBgUrl("http://baidu.com");
+req.setCardNo("6222000000000000000");
+req.setBgUrl("http://merchantDomain:port/merchantApplicationContext/lklpayResult/handle");
 req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
 req.setCertType(CertType.ID.getCode());
 req.setClientId("321000000000000000");
@@ -197,13 +197,13 @@ LklGatherRes res = payClient.gather(req, head);
 ```java
 LklPayAgentReq req = new LklPayAgentReq();
 
-req.setInterBankCode("6222021001116245702");
+req.setInterBankCode("6222000000000000000");
 req.setPayTypeId("5");
-req.setBgUrl("http://baidu.com");
+req.setBgUrl("http://merchantDomain:port/merchantApplicationContext/lklpayResult/handle");
 req.setCertType(CertType.ID.getCode());
 req.setClientId("360000000000000000");
 req.setAccountName("孙xx");
-req.setAccountNumber("6222021001116245702");
+req.setAccountNumber("6222000000000000000");
 req.setCurrency(LklCurrency.CNY.getCode());
 req.setCvv("123");
 req.setDateOfExpire("1602");
@@ -254,7 +254,7 @@ OrderQueryRes res = queryClient.orderQuery(req, head);
 ###签约查询
 ```java
 SignQueryReq req = new SignQueryReq();
-req.setCardNo("6222021001116245702");
+req.setCardNo("6222000000000000000");
 req.setClientName("孙xx");
 req.setClientId("360000000000000000");
 req.setCertType(CertType.ID.getCode());
@@ -317,7 +317,7 @@ RefundRes res = payClient.refun(req, head);
 ###用户签约
 ```java
 SignReq req = new SignReq();
-req.setCardNo("6222021001116245702");
+req.setCardNo("6222000000000000000");
 req.setClientName("孙xx");
 req.setCertType(CertType.ID.getCode());
 req.setClientId("360000000000000000");
@@ -336,7 +336,7 @@ SignRes res = signClient.sign(req, head);
 ```java
 SignVerifyReq req = new SignVerifyReq();
 
-req.setCardNo("6222021001116245702");
+req.setCardNo("6222000000000000000");
 req.setClientName("孙xx");
 req.setCertType(CertType.ID.getCode());
 req.setClientId("360000000000000000");
@@ -357,7 +357,7 @@ ReconSubscribeReq req = new ReconSubscribeReq();
 req.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 req.setStartDate("20160415");
 req.setEndDate("20160425");
-req.setNotifyAddr("http://baidu.com");
+req.setNotifyAddr("http://merchantDomain:port/merchantApplicationContext/lklreconFile/handle");
 
 LklCrossPaySuperReq head = new LklCrossPaySuperReq();
 head.setTs(DateUtil.getCurrentTime());
