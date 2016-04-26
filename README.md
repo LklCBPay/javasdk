@@ -1,6 +1,6 @@
 #Read me
 
-[![Build Status](https://travis-ci.org/LklCBPay/javasdk.svg?branch=master)](https://travis-ci.org/lklcrossboard/javasdk)
+[![Build Status](https://travis-ci.org/LklCBPay/javasdk.svg?branch=master)](https://travis-ci.org/LklCBPay/javasdk)
 
 ![v3.3](https://img.shields.io/badge/Version-v3.4-blue.svg)
 
