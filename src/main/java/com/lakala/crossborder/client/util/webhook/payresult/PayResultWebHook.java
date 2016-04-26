@@ -44,7 +44,7 @@ public class PayResultWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, L
 
         try {
             webHookIntf.handle(payResultNotify);
-            res.setMerId("111111、1");
+            res.setMerId("1111111");
             res.setTs(DateUtil.getCurrentTime());
             res.setReqType("B0005");
             res.setRetCode("0000");
