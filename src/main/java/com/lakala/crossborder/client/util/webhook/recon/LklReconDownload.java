@@ -102,9 +102,5 @@ public class LklReconDownload {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        LklReconDownload download = new LklReconDownload();
-        download.proceed("downloadUrl=http://10.7.111.188:8080/fileService/download.do?fileName=DOPCHN000033_20150908_20150909.txt&privData=xxxxx");
-    }
+    
 }
