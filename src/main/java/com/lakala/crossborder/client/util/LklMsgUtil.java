@@ -6,6 +6,8 @@ import com.lakala.crossborder.client.entities.LklCrossPayEncryptRes;
 import com.lakala.crossborder.client.entities.LklCrossPaySuperReq;
 import com.lakala.crossborder.client.entities.LklCrossPaySuperRes;
 import com.lakala.crossborder.client.exception.LklEncryptException;
+import com.lakala.crossborder.client.util.webhook.SuperWebHookRequest;
+import com.lakala.crossborder.client.util.webhook.SuperWebHookResponse;
 
 import java.io.UnsupportedEncodingException;
 
@@ -151,4 +153,114 @@ public class LklMsgUtil {
         return result;
     }
 
+
+    /**
+     * 解密拉卡拉回调消息
+     *
+     * @param lklCrossPayEncryptReq
+     * @param resClazz
+     * @param <T>
+     * @return
+     */
+    public static <T extends SuperWebHookRequest> T decryptMsgFromLkl(LklCrossPayEncryptReq lklCrossPayEncryptReq, Class<T> resClazz) {
+        T result = null;
+        String ts = lklCrossPayEncryptReq.getTs();
+        String encData = lklCrossPayEncryptReq.getEncData();
+        String reqType = lklCrossPayEncryptReq.getReqType();
+        String mac = lklCrossPayEncryptReq.getMac();
+
+        //请求参数mac解密字符串sha1
+        String reqMacStr = null;
+        //本地mac sha1字符串
+        String retMacStr = DigestUtil.Encrypt(ts + reqType + encData + "", "SHA-1");
+        try {
+            reqMacStr = new String(RSAUtil.decryptByPublicKey(ByteArrayUtil.hexString2ByteArray(mac), LklCrossPayEnv.getEnvConfig().getPublicKey()));
+        } catch (Exception e) {
+            throw new LklEncryptException("mac解密失败", e);
+        }
+        if (!retMacStr.equals(reqMacStr)) {
+            throw new LklEncryptException("mac校验失败");
+        }
+        //用响应方私钥解密加密密钥密文，比对时间戳，取后32个字符反HEX，得对称密钥
+        String encKey = lklCrossPayEncryptReq.getEncKey();
+        String desKey = getMerchantKey(encKey, LklCrossPayEnv.getEnvConfig().getPrivateKey());
+        ToolsUtil.remove();
+        ToolsUtil.setMerKey(desKey);
+        //用获得的对称密钥解密加密业务参数
+        String requestData = null;
+        try {
+            requestData = new String(DESCrypto.deCrypt(ByteArrayUtil.hexString2ByteArray(encData), desKey), "GBK");
+        } catch (UnsupportedEncodingException e) {
+            throw new LklEncryptException("业务参数解密失败", e);
+        }
+        Gson json = new Gson();
+        result = json.fromJson(requestData, resClazz);
+        return result;
+
+    }
+
+    /**
+     * 加密拉卡拉webhook响应返回给拉卡拉
+     *
+     * @param webHookResponse
+     * @return
+     */
+    public static LklCrossPayEncryptRes encryptWebHookMsg(SuperWebHookResponse webHookResponse, LklCrossPayEncryptRes encryptRes) {
+        String publicKey = LklCrossPayEnv.getEnvConfig().getPublicKey();
+        String privateKey = LklCrossPayEnv.getEnvConfig().getPrivateKey();
+        String ts = encryptRes.getTs();
+        String desKey = ToolsUtil.getMerKey();
+        String encKeyStr = ts + desKey;
+        String encKey = null;
+        try {
+            encKey = ByteArrayUtil.byteArray2HexString(RSAUtil.encryptByPublicKey(encKeyStr.getBytes("GBK"), publicKey));
+        } catch (Exception e) {
+            throw new LklEncryptException("生成encKey失败", e);
+        }
+        Gson json = new Gson();
+        String bizJson = json.toJson(webHookResponse);
+        //生成encData
+        String encData;
+        try {
+            encData = ByteArrayUtil.byteArray2HexString(DESCrypto.enCrypto(bizJson.getBytes("GBK"), desKey));
+        } catch (UnsupportedEncodingException e) {
+            throw new LklEncryptException("加密业务参数失败", e);
+        }
+        String reqType = encryptRes.getReqType();
+        String macStr = ts + reqType + encData;
+        //SHA-1
+        macStr = DigestUtil.Encrypt(macStr, "SHA-1");
+        //生成MAC
+        String mac = null;
+        try {
+            mac = ByteArrayUtil.byteArray2HexString(RSAUtil.encryptByPrivateKey(macStr.getBytes("GBK"), privateKey));
+        } catch (Exception e) {
+            throw new LklEncryptException(e);
+        }
+        encryptRes.setMac(mac);
+        encryptRes.setEncKey(encKey);
+        encryptRes.setEncData(encData);
+        ToolsUtil.remove();
+        return encryptRes;
+    }
+
+    /**
+     * 计算请求方对称密钥
+     *
+     * @param reqEncKey  加密密钥encKey
+     * @param privateKey 私钥
+     * @return
+     */
+    private final static String getMerchantKey(String reqEncKey, String privateKey) {
+
+        if (reqEncKey == null || privateKey == null) return null;
+        // 用响应方私钥解密加密密钥密文，比对时间戳，取后32个字符反HEX，得对称密钥
+        String merKey = ""; // 商户对称密钥
+        try {
+            merKey = new String(RSAUtil.decryptByPrivateKey(ByteArrayUtil.hexString2ByteArray(reqEncKey), privateKey), "GBK");
+        } catch (Exception e) {
+            throw new LklEncryptException("解密请求方对称密钥失败", e);
+        }
+        return merKey.substring(merKey.length() - 32, merKey.length());
+    }
 }

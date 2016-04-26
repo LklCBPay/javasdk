@@ -4,7 +4,7 @@ import com.lakala.crossborder.client.entities.LklCrossPayEncryptReq;
 import com.lakala.crossborder.client.entities.LklCrossPayEncryptRes;
 import com.lakala.crossborder.client.entities.notify.PayResultNotify;
 import com.lakala.crossborder.client.entities.notify.PayResultNotifyResponse;
-import com.lakala.crossborder.client.util.DateUtil;
+import com.lakala.crossborder.client.util.LklMsgUtil;
 import com.lakala.crossborder.client.util.webhook.LklWebHookIntf;
 import com.lakala.crossborder.client.util.webhook.WebHookHandler;
 import org.slf4j.Logger;
@@ -27,8 +27,8 @@ public class PayResultWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, L
     private static final Logger logger = LoggerFactory.getLogger(PayResultWebHook.class);
 
     @Autowired(required = false)
-    @Qualifier("payResultHandle")
-    private WebHookHandler<PayResultNotifyResponse, PayResultNotify> webHookIntf;
+    @Qualifier("lklpayResultHandle")
+    private WebHookHandler<PayResultNotify> webHookIntf;
 
     /**
      * 响应拉卡拉支付通知回调
@@ -36,19 +36,25 @@ public class PayResultWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, L
      * @param notify 拉卡拉支付结果通知
      * @return
      */
-    @RequestMapping(value = "/payResult/handle", method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/lklpayResult/handle", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public LklCrossPayEncryptRes proceed(@RequestBody LklCrossPayEncryptReq notify) {
         logger.debug("entering method proceed,req={}", notify.toString());
         PayResultNotify payResultNotify = null;
         LklCrossPayEncryptRes res = new LklCrossPayEncryptRes();
 
         try {
+            payResultNotify = LklMsgUtil.decryptMsgFromLkl(notify, PayResultNotify.class);
             webHookIntf.handle(payResultNotify);
-            res.setMerId("1111111");
-            res.setTs(DateUtil.getCurrentTime());
+            PayResultNotifyResponse response = new PayResultNotifyResponse();
+            response.setMerOrderId(payResultNotify.getMerOrderId());
+            response.setTransactionId(payResultNotify.getTransactionId());
+
+            res.setMerId(notify.getMerId());
+            res.setTs(notify.getTs());
             res.setReqType("B0005");
             res.setRetCode("0000");
             res.setVer("1.0.0");
+            res = LklMsgUtil.encryptWebHookMsg(response, res);
 
             logger.debug("exiting method proceed,res ={}", res.toString());
             return res;

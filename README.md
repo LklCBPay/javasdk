@@ -7,17 +7,19 @@
 *有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/issues)*
 
 ## 拉卡拉跨境支付平台后台接口java-sdk使用指南
-*开发者可将该sdk打成jar包设置在自己项目类路径中，或作为maven的一个模块引入自己项目，以使用该sdk方便接入拉卡拉跨境支付平台后台接口.sdk需要java1.6+*
-
-----
+*开发者可将该sdk打成jar包设置在自己项目类路径中，或作为maven的一个模块引入自己项目，以使用该sdk方便接入拉卡拉跨境支付平台后台接口*
+requirment:
+        * java 1.6+
+        * maven
+---------------
 ### sdk项目说明
 * 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
 ``` 
 #连接超时时间，毫秒
-connectTimeout=50000
+connectTimeout=5000
 #读超时时间，毫秒
-readTimeout=300000
+readTimeout=50000
 #http连接池最大连接数
 maxTotal=200
 #每个route的连接数

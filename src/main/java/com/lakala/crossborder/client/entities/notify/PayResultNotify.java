@@ -11,7 +11,7 @@ public class PayResultNotify extends SuperWebHookRequest {
 
     private static final long serialVersionUID = -4041692299186477990L;
 
-    private String merOrder;
+    private String merOrderId;
 
     private String orderTime;
 
@@ -35,12 +35,12 @@ public class PayResultNotify extends SuperWebHookRequest {
 
     private String ext2;
 
-    public String getMerOrder() {
-        return merOrder;
+    public String getMerOrderId() {
+        return merOrderId;
     }
 
-    public void setMerOrder(String merOrder) {
-        this.merOrder = merOrder;
+    public void setMerOrderId(String merOrderId) {
+        this.merOrderId = merOrderId;
     }
 
     public String getOrderTime() {
@@ -134,7 +134,7 @@ public class PayResultNotify extends SuperWebHookRequest {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PayResultNotify{");
-        sb.append("merOrder='").append(merOrder).append('\'');
+        sb.append("merOrderId='").append(merOrderId).append('\'');
         sb.append(", orderTime='").append(orderTime).append('\'');
         sb.append(", currency='").append(currency).append('\'');
         sb.append(", orderAmount='").append(orderAmount).append('\'');

@@ -5,10 +5,9 @@ package com.lakala.crossborder.client.util.webhook;
  * 处理拉卡拉通知<em>商户需根据自己业务实现该接口</em>
  *
  * @param <T>
- * @param <E>
  * @author jiangzhifei jiangzhifei@lakala.com
  */
-public interface WebHookHandler<T extends SuperWebHookResponse, E extends SuperWebHookRequest> {
+public interface WebHookHandler<T extends SuperWebHookRequest> {
 
     /**
      * 处理拉卡拉通知
@@ -17,5 +16,5 @@ public interface WebHookHandler<T extends SuperWebHookResponse, E extends SuperW
      * @return
      * @throws Exception
      */
-    T handle(E notifyMsg) throws Exception;
+    void handle(T notifyMsg) throws Exception;
 }

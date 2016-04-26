@@ -44,12 +44,19 @@ public class ToolsUtil {
         }
     }
 
+    /**
+     * 设置对称密钥
+     *
+     * @param key
+     */
+    public static void setMerKey(String key) {
+        LOCAL_MERKEY.set(key);
+    }
+
     public static void remove() {
         LOCAL_MERKEY.remove();
     }
 
-    public static void main(String[] args) {
-        System.err.print(getRandomString(32));
-    }
+
 }
 
