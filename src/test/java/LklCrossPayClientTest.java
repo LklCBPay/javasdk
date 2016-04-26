@@ -1,40 +1,42 @@
-import com.lakala.crosspay.client.LklCbPayClient;
-import com.lakala.crosspay.client.LklCbPayQueryClient;
-import com.lakala.crosspay.client.LklCbPaySignClient;
-import com.lakala.crosspay.client.entities.LklCrossPaySuperReq;
-import com.lakala.crosspay.client.entities.gather.LklGatherReq;
-import com.lakala.crosspay.client.entities.gather.LklGatherRes;
-import com.lakala.crosspay.client.entities.otp.LklOtpReq;
-import com.lakala.crosspay.client.entities.otp.LklOtpRes;
-import com.lakala.crosspay.client.entities.payAgent.LklPayAgentReq;
-import com.lakala.crosspay.client.entities.payAgent.LklPayAgentRes;
-import com.lakala.crosspay.client.entities.payment.PaymentReq;
-import com.lakala.crosspay.client.entities.payment.PaymentRes;
-import com.lakala.crosspay.client.entities.query.*;
-import com.lakala.crosspay.client.entities.recon.ReconSubscribeReq;
-import com.lakala.crosspay.client.entities.recon.ReconSubscribeRes;
-import com.lakala.crosspay.client.entities.refund.RefundReq;
-import com.lakala.crosspay.client.entities.refund.RefundRes;
-import com.lakala.crosspay.client.entities.sign.SignReq;
-import com.lakala.crosspay.client.entities.sign.SignRes;
-import com.lakala.crosspay.client.entities.sign.SignVerifyReq;
-import com.lakala.crosspay.client.entities.sign.SignVerifyRes;
-import com.lakala.crosspay.client.entities.submit.SubmitOrderReq;
-import com.lakala.crosspay.client.entities.submit.SubmitOrderRes;
-import com.lakala.crosspay.client.enums.CertType;
-import com.lakala.crosspay.client.enums.CrossBorderBizType;
-import com.lakala.crosspay.client.enums.LklCurrency;
-import com.lakala.crosspay.client.enums.LklEnv;
-import com.lakala.crosspay.client.util.DateUtil;
-import com.lakala.crosspay.client.util.LklCrossPayEnv;
+import com.lakala.crossborder.client.LklCbPayClient;
+import com.lakala.crossborder.client.LklCbPayQueryClient;
+import com.lakala.crossborder.client.LklCbPaySignClient;
+import com.lakala.crossborder.client.entities.LklCrossPaySuperReq;
+import com.lakala.crossborder.client.entities.gather.LklGatherReq;
+import com.lakala.crossborder.client.entities.gather.LklGatherRes;
+import com.lakala.crossborder.client.entities.otp.LklOtpReq;
+import com.lakala.crossborder.client.entities.otp.LklOtpRes;
+import com.lakala.crossborder.client.entities.payAgent.LklPayAgentReq;
+import com.lakala.crossborder.client.entities.payAgent.LklPayAgentRes;
+import com.lakala.crossborder.client.entities.payment.PaymentReq;
+import com.lakala.crossborder.client.entities.payment.PaymentRes;
+import com.lakala.crossborder.client.entities.query.*;
+import com.lakala.crossborder.client.entities.recon.ReconSubscribeReq;
+import com.lakala.crossborder.client.entities.recon.ReconSubscribeRes;
+import com.lakala.crossborder.client.entities.refund.RefundReq;
+import com.lakala.crossborder.client.entities.refund.RefundRes;
+import com.lakala.crossborder.client.entities.sign.SignReq;
+import com.lakala.crossborder.client.entities.sign.SignRes;
+import com.lakala.crossborder.client.entities.sign.SignVerifyReq;
+import com.lakala.crossborder.client.entities.sign.SignVerifyRes;
+import com.lakala.crossborder.client.entities.submit.SubmitOrderReq;
+import com.lakala.crossborder.client.entities.submit.SubmitOrderRes;
+import com.lakala.crossborder.client.enums.CertType;
+import com.lakala.crossborder.client.enums.CrossBorderBizType;
+import com.lakala.crossborder.client.enums.LklCurrency;
+import com.lakala.crossborder.client.enums.LklEnv;
+import com.lakala.crossborder.client.util.DateUtil;
+import com.lakala.crossborder.client.util.LklCrossPayEnv;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +58,10 @@ public class LklCrossPayClientTest {
 
     @Autowired
     private LklCbPaySignClient signClient;
+
+    @Autowired
+    @Qualifier("restTemplate")
+    private RestTemplate restTemplate;
 
     @Before
     public void testSetUp() {

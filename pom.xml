@@ -6,7 +6,7 @@
 
     <groupId>com.lakala.crosspay</groupId>
     <artifactId>lklcrossPayClient</artifactId>
-    <version>3.4-RELEASE</version>
+    <version>3.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -121,5 +121,18 @@
             <version>${jackson.version}</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-release</id>
+            <name>nexus distribution release repository</name>
+            <url>http://10.7.111.11:8981/nexus/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>nexus distribution snapshot repository</name>
+            <url>http://10.7.111.11:8981/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
