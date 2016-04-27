@@ -12,6 +12,4 @@ gen### Java template
 # Package Files #
 *.jar
 
-#properties#
-/src/main/resources/lklconfig.properties
 

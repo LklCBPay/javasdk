@@ -82,8 +82,8 @@ public class LklCrossPayClientTest {
         req.setBgUrl("http://baidu.com");
         req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
         req.setCertType(CertType.ID.getCode());
-        req.setClientId("360000000000000000");
-        req.setClientName("孙xx");
+        req.setClientId("360803198005055579");
+        req.setClientName("孙克斌");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
