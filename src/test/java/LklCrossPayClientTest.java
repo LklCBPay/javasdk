@@ -82,14 +82,14 @@ public class LklCrossPayClientTest {
         req.setBgUrl("http://baidu.com");
         req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
         req.setCertType(CertType.ID.getCode());
-        req.setClientId("360803198005055579");
-        req.setClientName("孙克斌");
+        req.setClientId("360000000000000000");
+        req.setClientName("孙xx");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
         req.setIsMergeSign("1");
         req.setMerOrderId("SH20160420194753");
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
         req.setOrderAmount("223123.09");
         req.setOrderEffTime("20160422194550");
         req.setOrderSummary("111312");
@@ -179,7 +179,7 @@ public class LklCrossPayClientTest {
         req.setCvv("123");
         req.setDateOfExpire("1602");
         req.setMerOrderId("SH20160420194563");
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
         req.setOrderAmount("223123.09");
         req.setOrderEffTime("20160422194550");
         req.setOrderSummary("111312");
@@ -225,7 +225,7 @@ public class LklCrossPayClientTest {
         req.setCvv("123");
         req.setDateOfExpire("1602");
         req.setMerOrderId("SH20160430195553");
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
         req.setOrderAmount("0.02");
         req.setOrderEffTime("20160426094550");
         req.setOrderSummary("111312");
@@ -291,7 +291,7 @@ public class LklCrossPayClientTest {
         req.setClientName("孙xx");
         req.setClientId("360000000000000000");
         req.setCertType(CertType.ID.getCode());
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setVer("1.0.0");
@@ -373,7 +373,7 @@ public class LklCrossPayClientTest {
         req.setCertType(CertType.ID.getCode());
         req.setClientId("360000000000000000");
         req.setDateOfExpire("1602");
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setTs(DateUtil.getCurrentTime());
@@ -396,7 +396,7 @@ public class LklCrossPayClientTest {
         req.setClientName("孙xx");
         req.setCertType(CertType.ID.getCode());
         req.setClientId("360000000000000000");
-        req.setMobile("13651234567");
+        req.setMobile("15000000000");
         req.setSmsCode("111111");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
