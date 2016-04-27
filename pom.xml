@@ -6,7 +6,7 @@
 
     <groupId>com.lakala.crosspay</groupId>
     <artifactId>lklcrossPayClient</artifactId>
-    <version>3.4-SNAPSHOT</version>
+    <version>3.4-RELEASE</version>
     <packaging>jar</packaging>
 
     <properties>
