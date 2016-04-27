@@ -16,7 +16,19 @@
         * maven
 ---------------
 ### sdk集成指南
+* 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
+```java 
+#连接超时时间，毫秒
+connectTimeout=5000
+#读超时时间，毫秒
+readTimeout=5000
+#http连接池最大连接数
+maxTotal=200
+#每个route的连接数
+defaultMaxPerRoute=200
+```
+* 以上配置可根据自身系统情况自行设定
 * 此sdk是maven项目，目录符合maven目录风格。
    * /src/test/java目中的文件为接口测试文件。
    * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的支付、退款接口对接方法
