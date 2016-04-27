@@ -6,7 +6,7 @@
 
 *有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/issues)*
 
-## 拉卡拉跨境支付平台后台接口java-sdk使用指南
+# 拉卡拉跨境支付平台后台接口java-sdk使用指南
 *开发者可将该sdk打成jar包设置在自己项目类路径中，或作为maven的一个模块引入自己项目，以使用该sdk方便接入拉卡拉跨境支付平台后台接口*
 
 **requirment:**
@@ -365,4 +365,54 @@ head.setReqType("B0008");
 head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
 ReconSubscribeRes res = payClient.reconSubscribe(req, head);
+```
+
+-------
+
+## 处理拉卡拉跨境支付通知
+
+### 处理支付结果通知
+开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklpayResultHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
+
+```java
+
+@Component("lklpayResultHandle")
+public class PayResultNotifyImpl implements WebHookHandler<PayResultNotify> {
+    private static final Logger logger = LoggerFactory.getLogger(PayResultNotifyImpl.class);
+
+    @Override
+    public void handle(PayResultNotify payResultNotify) throws Exception {
+
+        logger.info("--------------------------------------------------这是自己实现的-------------------------------");
+
+    }
+
+}
+```
+
+### 处理对账文件下载通知
+开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklreconFileHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
+
+```java
+@Component("lklreconFileHandle")
+public class ReconDown implements WebHookHandler<ReconDownload> {
+    private static final Logger logger = LoggerFactory.getLogger(ReconDown.class);
+
+    @Override
+    public void handle(ReconDownload reconDownload) throws Exception {
+        String fileName = reconDownload.getFileName();
+        InputStream in = reconDownload.getIn();
+
+        BufferedInputStream bin = new BufferedInputStream(in);
+        byte[] contents = new byte[1024];
+        int byteRead = 0;
+        String strFileContents;
+
+        while ((byteRead = bin.read(contents)) != -1) {
+            strFileContents = new String(contents, 0, byteRead);
+            logger.info("file===================={}", strFileContents);
+        }
+        in.close();
+    }
+}
 ```
