@@ -38,24 +38,13 @@ defaultMaxPerRoute=200
 ```xml
  <import resource="classpath*:client-application.xml"/>
 ```
-`对于引入拉卡拉跨境的client-application.xml的特别说明`
+
 >若需要启用sdk包中监听拉卡拉跨境回调商户的接口需对springmvc做配置
 
->1.若商户已有配置springmvc的配置文件且开启了 ```<mvc:annotation-driven/>``` ，则需在该语句前添加
-```xml
-<import resource="classpath*:client-application.xml"/>
-```
->2.若商户未配置springmvc，则首先需对自己的spring xml配置文件添加namespace以及schemaLocation，如下
-> ``` xmlns:mvc="http://www.springframework.org/schema/mvc" ```
+>1. 商户需开启 ```<mvc:annotation-driven/>``` ;
 
-> ``` http://www.springframework.org/schema/mvc ```
-> ``` http://www.springframework.org/schema/mvc/spring-mvc.xsd ```
-
->添加如上语句后，在自己spring配置文件中添加 
-```xml
-<import resource="classpath*:client-application.xml"/>
-```
-> 如无需启用sdk包中监听拉卡拉跨境回调则直接在自己项目中引入sdk开发包spring配置即可
+>2. 设置springmvc扫描包 ``` <context:component-scan base-package="com.lakala.crossborder.client.util.webhook"/> ```
+> `如无需启用sdk包中监听拉卡拉跨境回调则直接在自己项目中引入sdk开发包spring配置即可`
 
 
 ## 接口对接说明
@@ -64,7 +53,7 @@ defaultMaxPerRoute=200
 ```java
 LklCrossPayEnv.registerEnv(LklEnv.SANDBOX, merId, privKey, pubKey);
 ```
-> 建议在项目启动时做全局唯一性注册
+> `建议在项目启动时做全局唯一性注册`
 
 LklEnv.SANDBOX-拉卡拉服务器环境。LklEnv.SANDBOX以及LklEnv.LIVE。live环境为生产环境
 
