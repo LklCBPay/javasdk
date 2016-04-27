@@ -6,9 +6,9 @@
 
     <bean id="ky.pollingConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
         <!--整个连接池的并发-->
-        <property name="maxTotal" value="${maxTotal}"/>
+        <property name="maxTotal" value="200"/>
         <!--每个主机的并发-->
-        <property name="defaultMaxPerRoute" value="${defaultMaxPerRoute}"/>
+        <property name="defaultMaxPerRoute" value="200"/>
     </bean>
 
     <bean id="ky.httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
@@ -36,9 +36,9 @@
           class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
         <constructor-arg ref="ky.httpClient"/>
         <!--连接超时时间，毫秒-->
-        <property name="connectTimeout" value="${connectTimeout}"/>
+        <property name="connectTimeout" value="5000"/>
         <!--读写超时时间，毫秒-->
-        <property name="readTimeout" value="${readTimeout}"/>
+        <property name="readTimeout" value="5000"/>
     </bean>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">

@@ -36,14 +36,6 @@
     </mvc:annotation-driven>
 
     <!-- ***************************************************************************************************************** -->
-    <bean id="appProperty"
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <array>
-                <value>classpath:lklconfig.properties</value>
-            </array>
-        </property>
-    </bean>
     <bean id="yamlMap" class="org.springframework.beans.factory.config.YamlMapFactoryBean">
         <property name="resources">
             <list>
