@@ -12,6 +12,7 @@
 **requirment:**
 
         * java 1.6+
+        * spring
         * maven
 ---------------
 ### sdk集成指南
@@ -30,7 +31,9 @@ defaultMaxPerRoute=200
 * 以上配置可根据自身系统情况自行设定
 * 此sdk是maven项目，目录符合maven目录风格。
    * /src/test/java目中的文件为接口测试文件。
-   * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的对接方法
+   * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的支付、退款接口对接方法
+   * /src/main/java/LklCbPayQueryClient文件中各方法为拉卡拉跨境支付平台后台接口对应的查询类接口对接方法
+   * /src/main/java/LklCbPaySignClient文件中各方法为拉卡拉跨境支付平台后台接口对应的签约类接口对接方法
 * 开发者需在自己项目中引入sdk开发包spring配置
 ```xml
  <import resource="classpath*:client-application.xml"/>
