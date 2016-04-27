@@ -376,7 +376,7 @@ ReconSubscribeRes res = payClient.reconSubscribe(req, head);
 
 ### 处理支付结果通知
 开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklpayResultHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
-
+如：
 ```java
 
 @Component("lklpayResultHandle")
@@ -392,10 +392,11 @@ public class PayResultNotifyImpl implements WebHookHandler<PayResultNotify> {
 
 }
 ```
+该接口对应的url为:``` 商户域名/商户应用上下文/lklpayResult/handle```
 
 ### 处理对账文件下载通知
 开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklreconFileHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
-
+如：
 ```java
 @Component("lklreconFileHandle")
 public class ReconDown implements WebHookHandler<ReconDownload> {
@@ -419,3 +420,4 @@ public class ReconDown implements WebHookHandler<ReconDownload> {
     }
 }
 ```
+该接口对应的url为:``` 商户域名/商户应用上下文/lklreconFile/handle```
