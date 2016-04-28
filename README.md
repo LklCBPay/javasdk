@@ -362,6 +362,7 @@ ReconSubscribeRes res = payClient.reconSubscribe(req, head);
 -------
 
 ## 处理拉卡拉跨境支付通知
+### 若商户选择开启通知响应，即使不实现对应方法sdk会默认响应给拉卡拉跨境为成功。
 
 ### 处理支付结果通知
 开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklpayResultHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
@@ -375,7 +376,14 @@ public class PayResultNotifyImpl implements WebHookHandler<PayResultNotify> {
     @Override
     public void handle(PayResultNotify payResultNotify) throws Exception {
 
-        logger.info("--------------------------------------------------这是自己实现的-------------------------------");
+         payResultNotify.getPayResult();
+         payResultNotify.getCurrency();
+         payResultNotify.getExchangeRate();
+         payResultNotify.getMerOrderId();
+         payResultNotify.getPayAmount();
+         payResultNotify.getTransactionId();
+                
+         /*****************************商户取到通知内容，自行处理业务*******************************************/
 
     }
 
