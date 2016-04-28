@@ -4,7 +4,7 @@
 
 ![v3.3](https://img.shields.io/badge/Version-v3.4-blue.svg)
 
-*有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/issues)*
+*有任何问题欢迎提出 [issue](https://github.com/lklcrossboard/javasdk/issues) 或邮件到 <int_bz@lakala.com>*
 
 # 拉卡拉跨境支付平台后台接口java-sdk使用指南
 *开发者可将该sdk打成jar包设置在自己项目类路径中，或作为maven的一个模块引入自己项目，以使用该sdk方便接入拉卡拉跨境支付平台后台接口*
