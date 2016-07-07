@@ -82,6 +82,8 @@ public class LklReconDownload {
             }
             logger.info("downloadUrl,fileName={},url={}", new String[]{downloadUrl.getFileName(), downUrl});
             webHookIntf.handle(downloadUrl);
+
+            response.close();
             return "OK";
         } catch (URISyntaxException e) {
             logger.error("downLoad recon file error", e);
@@ -102,5 +104,5 @@ public class LklReconDownload {
         }
         return null;
     }
-    
+
 }
