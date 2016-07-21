@@ -24,6 +24,7 @@ public class LklMsgUtil {
     /**
      * <p>
      * 加密请求参数
+     * encrypt the msg sent to lakala
      * </p>
      *
      * @param obj      参数对象
@@ -97,6 +98,7 @@ public class LklMsgUtil {
     /**
      * <p>
      * 解密拉卡拉响应报文
+     * decrypt the response msg back from lakala.the des key should be the same to which used to encrypt the msg sent to lakala
      * </p>
      *
      * @param encryptRes 拉卡拉加密响应报文
@@ -156,6 +158,8 @@ public class LklMsgUtil {
 
     /**
      * 解密拉卡拉回调消息
+     * decrypt the webhook msg from lakala,des key should  get from the method :getMerchantKey
+     *
      *
      * @param lklCrossPayEncryptReq
      * @param resClazz
@@ -201,6 +205,7 @@ public class LklMsgUtil {
 
     /**
      * 加密拉卡拉webhook响应返回给拉卡拉
+     * encrypt the webhook response msg sent back to lakala
      *
      * @param webHookResponse
      * @return
