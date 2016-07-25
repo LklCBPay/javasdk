@@ -25,7 +25,7 @@ public class LklMsgUtil {
     /**
      * <p>
      * 加密请求参数
-     * encrypt the msg sent to lakala.the desc is stored in threadlocal, which means if u want to get the right desc to decrypt lakala msg ,
+     * encrypt the msg sent to lakala.the des key is stored in threadlocal, which means if u want to get the right des key to decrypt lakala msg ,
      * u should guarantee the thread is the same  to the one used to send the request msg.Otherwise u should not store the des key to threadlocal
      * </p>
      *
