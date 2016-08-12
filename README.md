@@ -223,6 +223,8 @@ LklCrossPaySuperReq head = new LklCrossPaySuperReq();
 head.setVer("1.0.0");
 head.setTs(DateUtil.getCurrentTime());
 head.setReqType("B0001");
+//根据商户开通的产品设置
+head.setPayTypeId("4");
 head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
 ExchangeRateQueryRes res = queryClient.exchangeRateQuery(req, head);
