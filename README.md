@@ -180,6 +180,7 @@ LklCrossPaySuperReq head = new LklCrossPaySuperReq();
 head.setVer("1.0.0");
 head.setTs(DateUtil.getCurrentTime());
 head.setReqType("B0013");
+head.setPayTypeId("4");
 head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
 LklGatherRes res = payClient.gather(req, head);
