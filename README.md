@@ -20,9 +20,9 @@
 
 ```java 
 #连接超时时间，毫秒
-connectTimeout=5000
+connectTimeout=15000
 #读超时时间，毫秒
-readTimeout=5000
+readTimeout=15000
 #http连接池最大连接数
 maxTotal=200
 #每个route的连接数
