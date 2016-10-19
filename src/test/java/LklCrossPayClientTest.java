@@ -171,7 +171,7 @@ public class LklCrossPayClientTest {
 
         req.setCardNo("6222021001116245702");
         req.setBgUrl("http://baidu.com");
-        req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
+        req.setBusiCode(CrossBorderBizType.CARGO_TRADE.getCode());
         req.setCertType(CertType.ID.getCode());
         req.setClientId("360000000000000000");
         req.setClientName("孙xx");
