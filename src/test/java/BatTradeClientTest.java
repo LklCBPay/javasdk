@@ -6,13 +6,6 @@ import com.lakala.crossborder.client.util.DateUtil;
 import com.lakala.crossborder.client.util.DigestUtil;
 import com.lakala.crossborder.client.util.LklCrossPayEnv;
 import com.lakala.crossborder.client.util.webhook.batTrade.BatchTradeWebHook;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * 批量交易客户端
@@ -151,58 +138,4 @@ public class BatTradeClientTest {
         }
     }
 
-    @Test
-    public void testWebHook() {
-        String j = "{\"encData\":\"B85F29D7516BCABA78CA7824931386BDF533480B61349EBEC20EE92B3A4BDEB7\",\"ts\":\"20161103194200000010\",\"encKey\":\"2EEC3B837A306A55C91C5F905D1950854FB91F357C734893280228368B1BC54BB0F205469E1ABA3AAEB9AC56FF8DEA2CBA4E9052E1C8A1B0CF453ACAC6AC8834CF4CFDE4E8C01F17F9966AB6AE01E53DC4BFC65AFEDFE567F443654BAAC83F027B33C8C2706B27A3F829960FEAB2FF06C89C0A7564690C5C5F21DD4AFD9E2951\",\"reqType\":\"B0005\",\"merId\":\"DOPCHN000258\",\"mac\":\"2B0C8BF7C4B35FFBF77E12BF9D65415930873F0579F962EFE7FB03E95A20EE3D4D01ACAD1C9097F5DB443B2CCFC1C662D894175EB0DF1A2C2624E4823EE04F40A58D3CEE1FF08A18F22881E96966EDD6304EA4BCDE40249B30BFDEABD39D35D0865534764FB6F1BC6DD140A09DFE5F4923368C47EA50719FCD841ED7B774AF6E\",\"ver\":\"3.0.0\"}";
-//        Gson json = new GsonBuilder().create();
-//        LklCrossPayEncryptReq req = json.fromJson(j, LklCrossPayEncryptReq.class);
-//        LklCrossPayEncryptReq req = new LklCrossPayEncryptReq();
-//        req.setEncData("B301F1A41A8E373999BE9ECAB59A8D56C99BAB99644BE2E27A697B2484025796");
-//        req.setEncKey("523FB8FD1A2BEC29E315349B30BD5B0AFA509C2DAE1D92D54A621498C4EB175639DA58D6A45545139EAAB9233E7DAA04F70EB7472161BAACE4F915700C3DDFBF6064E40800076B619B1F5D37395AF0B0D2972A4DA482055C65BED035DE3735AB882C72901DE1CB9C1906E0E4E4E504CB7EF060FEBC3A2981CF6654122C0AF124");
-//        req.setMac("219E3E2C52457CA93629726A939C400EA56752F0DE6A8C6EB2CDBA702F5730001D336FD6E8CF719DC540DCD260206A1727D8558CDFAFDFAFAD07C2D24046AAEF88874DC1E03CE7BC4084D87C6024C18E1B74389FE7FB05E8AEB28E489077038CA02A4FCF9C8EA28A9DC2255E300DBEFAF73A89A07FD7519EC038AC7056950F7F");
-//        req.setMerId("DOPCHN000258");
-//        req.setReqType("B0005");
-//        req.setTs("20161103184400000043");
-//        req.setVer("3.0.0");
-
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httpPost = new HttpPost();
-//			StringBody content = new StringBody(reqJson,"application/json;charset=UTF-8", Charset.forName("utf-8"));
-        String notifyUrl = "http://10.7.37.99:8080/lklBatTrade/webHook";
-        try {
-            StringEntity content = new StringEntity(j, "application/json;charset=UTF-8", "utf-8");
-            RequestConfig config = RequestConfig.custom().setConnectTimeout(60000).setSocketTimeout(60000).build();
-            httpPost.setConfig(config);
-            httpPost.setEntity(content);
-
-            httpPost.setURI(new URI(notifyUrl));
-            CloseableHttpResponse response = httpClient.execute(httpPost);
-            response.getStatusLine().getStatusCode();
-            InputStream in = null;
-            BufferedInputStream bin = null;
-            in = response.getEntity().getContent();
-            bin = new BufferedInputStream(in);
-            byte[] contents = new byte[1024];
-            int byteRead = 0;
-            StringBuffer strFileContents = new StringBuffer();
-            while ((byteRead = bin.read(contents)) != -1) {
-                strFileContents.append(new String(contents, 0, byteRead));
-            }
-            logger.info("res====================" + strFileContents.toString());
-        } catch (URISyntaxException e) {
-            logger.error("商户注册回调地址失败,url=" + notifyUrl, e);
-
-        } catch (ClientProtocolException e) {
-            logger.error("商户注册回调地址失败,url=" + notifyUrl, e);
-
-        } catch (IOException e) {
-            logger.error("商户注册回调地址失败,url=" + notifyUrl, e);
-
-        }
-
-
-//        LklCrossPayEncryptRes res = payResultWebHook.proceed(req);
-//
-//        logger.info("res={}", json.toJson(res));
-    }
 }
