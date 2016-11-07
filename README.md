@@ -54,7 +54,7 @@ defaultMaxPerRoute=200
 ```java
 LklCrossPayEnv.registerEnv(LklEnv.SANDBOX, merId, privKey, pubKey);
 ```
-> `建议在项目启动时做全局唯一性注册,一个应用智能注册一个环境。见LklCrossPayEnv#registerEnv方法`
+> `建议在项目启动时做全局唯一性注册,一个应用只能注册一个环境。见LklCrossPayEnv#registerEnv方法`
 
 LklEnv.SANDBOX-拉卡拉服务器环境。LklEnv.SANDBOX以及LklEnv.LIVE。live环境为生产环境
 
