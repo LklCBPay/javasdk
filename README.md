@@ -34,6 +34,7 @@ defaultMaxPerRoute=200
    * /src/main/java/LklCbPayClient文件中各方法为拉卡拉跨境支付平台后台接口对应的支付、退款接口对接方法
    * /src/main/java/LklCbPayQueryClient文件中各方法为拉卡拉跨境支付平台后台接口对应的查询类接口对接方法
    * /src/main/java/LklCbPaySignClient文件中各方法为拉卡拉跨境支付平台后台接口对应的签约类接口对接方法
+   * /src/main/java/LklCbPayBatchTradeClient文件中各方法为拉卡拉跨境支付平台批量交易对应的签约类接口对接方法
 * 开发者需在自己项目中引入sdk开发包spring配置
 ```xml
  <import resource="classpath*:client-application.xml"/>
