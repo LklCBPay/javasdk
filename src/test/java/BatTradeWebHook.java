@@ -27,7 +27,7 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
             throw new LklCommonException("通知类型-notifyType为空");
         }
         String bizToken = notifyMsg.getBizToken();
-//        String merchantId = notifyMsg.getMerchantId();
+        String merchantId = notifyMsg.getMerchantId();
 
         if ("1".equals(notifyType)) {
             //处理交易结果回调
