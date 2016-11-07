@@ -211,14 +211,14 @@ public class LklCbPayBatchTradeClient {
 
             }
             //计算下载文件的摘要
-            String localDiget = DigestUtil.fileDigestWithSalt(secCode, filePath + fileName);
+            String localDigest = DigestUtil.fileDigestWithSalt(secCode, filePath + fileName);
             //比较文件摘要是否与拉卡拉消息中一致
 
             // ------------------------此处商户可以自行修改，是否对摘要进行判定。建议进行判定！！！
-            if (!localDiget.equals(lklDigest)) {
+            if (!localDigest.equals(lklDigest)) {
                 logger.warn("digest of {} is not correct", fileName);
-                logger.debug("localDiget of {} is {}", new String[]{fileName, localDiget});
-                logger.debug("lakalaDiget of {} is {}", new String[]{fileName, lklDigest});
+                logger.debug("localDigest of {} is {}", new String[]{fileName, localDigest});
+                logger.debug("lakalaDigest of {} is {}", new String[]{fileName, lklDigest});
                 throw new LklClientException("回盘文件 " + fileName + "摘要验证失败");
             }
             // ------------------------此处商户可以自行修改，是否对摘要进行判定。建议进行判定！！！
