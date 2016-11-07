@@ -1,6 +1,5 @@
 package com.lakala.crossborder.client.entities.webHook;
 
-import com.google.gson.annotations.SerializedName;
 import com.lakala.crossborder.client.util.webhook.SuperWebHookRequest;
 
 /**
