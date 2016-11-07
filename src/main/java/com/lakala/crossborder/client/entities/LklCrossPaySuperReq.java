@@ -74,4 +74,16 @@ public class LklCrossPaySuperReq implements Serializable {
     public void setTs(String ts) {
         this.ts = ts;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("LklCrossPaySuperReq{");
+        sb.append("ver='").append(ver).append('\'');
+        sb.append(", merId='").append(merId).append('\'');
+        sb.append(", payTypeId='").append(payTypeId).append('\'');
+        sb.append(", reqType='").append(reqType).append('\'');
+        sb.append(", ts='").append(ts).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

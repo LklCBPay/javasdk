@@ -1,5 +1,10 @@
 package com.lakala.crossborder.client.util;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -69,6 +74,22 @@ public class DigestUtil {
             des += tmp;
         }
         return des;
+    }
+
+    /**
+     * 使用盐码对文件做md5摘要
+     *
+     * @param salt     盐码
+     * @param fileName 文件名（全路径）
+     * @return md5 hex
+     */
+    public static String fileDigestWithSalt(String salt, String fileName) {
+        try {
+            byte[] bytes = ArrayUtils.addAll(salt.getBytes("UTF-8"), FileUtils.readFileToByteArray(new File(fileName)));
+            return DigestUtils.md5Hex(bytes);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
 }

@@ -12,8 +12,6 @@ public class LklCrossPayEncryptRes extends LklCrossPaySuperRes {
 
     private static final long serialVersionUID = -8037859172913791796L;
 
-    private String reqType;
-
     private String encData;
 
     private String encKey;
@@ -44,18 +42,10 @@ public class LklCrossPayEncryptRes extends LklCrossPaySuperRes {
         this.mac = mac;
     }
 
-    public String getReqType() {
-        return reqType;
-    }
-
-    public void setReqType(String reqType) {
-        this.reqType = reqType;
-    }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("LklCrossPayEncryptRes{");
-        sb.append("reqType='").append(reqType).append('\'');
         sb.append(", encData='").append(encData).append('\'');
         sb.append(", encKey='").append(encKey).append('\'');
         sb.append(", mac='").append(mac).append('\'');

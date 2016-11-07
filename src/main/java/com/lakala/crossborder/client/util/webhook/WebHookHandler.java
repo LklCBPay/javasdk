@@ -1,6 +1,8 @@
 package com.lakala.crossborder.client.util.webhook;
 
 
+import com.lakala.crossborder.client.exception.LklCommonException;
+
 /**
  * 处理拉卡拉通知<em>商户需根据自己业务实现该接口</em>
  *
@@ -14,7 +16,7 @@ public interface WebHookHandler<T extends SuperWebHookRequest> {
      *
      * @param notifyMsg
      * @return
-     * @throws Exception
+     * @throws LklCommonException
      */
-    void handle(T notifyMsg) throws Exception;
+    void handle(T notifyMsg) throws LklCommonException;
 }

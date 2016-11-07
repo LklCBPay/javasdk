@@ -1,11 +1,11 @@
 package com.lakala.crossborder.client.util;
 
 import com.lakala.crossborder.client.enums.LklEnv;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,17 +19,22 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author jiangzhifei jiangzhifei@lakala.com
  */
 @Component
-public class LklCrossPayEnv implements InitializingBean {
+public class LklCrossPayEnv {
+
     @Autowired
-    private ApplicationContext ctx;
+    @Qualifier("yamlMap")
+    private Map<String, Object> yamlMap;
 
     private static Map<String, Object> YML_MAP;
 
     private static final Map<LklEnv, LklCrossPayClientConfig> ENV_CONFIG = new ConcurrentHashMap<LklEnv, LklCrossPayClientConfig>();
 
+    @PostConstruct
     public void afterPropertiesSet() throws Exception {
-        YML_MAP = ctx.getBean("yamlMap", Map.class);
+//        YML_MAP = ctx.getBean("yamlMap", Map.class);
+        YML_MAP = (Map<String, Object>) yamlMap.get("yamlMap");
     }
+
 
     /**
      * 获取当前环境的配置信息
@@ -54,7 +59,7 @@ public class LklCrossPayEnv implements InitializingBean {
      * @param privateKey 该环境对应的私钥
      * @param publicKey  该环境对应的公钥
      */
-    public synchronized static void registerEnv(LklEnv env, String merId, String privateKey, String publicKey) {
+    public synchronized void registerEnv(LklEnv env, String merId, String privateKey, String publicKey) {
         String envValue = env.getEnv();
         //一个实例只允许注册一个环境
         if (!ENV_CONFIG.isEmpty()) {

@@ -102,7 +102,7 @@ public class LklReconDownload {
                 logger.error("close httpClient error", e);
             }
         }
-        return null;
+        return "BAD PROGRAM";
     }
 
 }

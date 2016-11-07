@@ -17,7 +17,7 @@ public class ToolsUtil {
      * @param length 自定义长度
      * @return
      */
-    private static String getRandomString(int length) {
+    public static String getRandomString(int length) {
 //        String radStr = "w0eA*1l&Bht3oCz^2p-D=n45%Ev8F6+Gg$9jHxdI7Ev8F6+Gg$9jHxdI\7Jc8KkLrMyaNq@mOsP#QR/!STbUVuWXfYiZ~w0eA*1l&Bht3oCz^2Jc8KkLrMyaNq@mOsP#QR!STbUVuWXfYiZ~w0eA*1l&Bht3oCz^2p-D=n45%ÍÍp-D=n45%Ev8F6+Gg$9jHxdI7Jc8KkLrMyaNq@mOsP#QR!STbUVuWXfYiZ~";
 //        StringBuffer generateRandStr = new StringBuffer();
 //        Random rand = new Random();

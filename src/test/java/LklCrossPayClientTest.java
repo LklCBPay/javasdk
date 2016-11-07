@@ -63,12 +63,15 @@ public class LklCrossPayClientTest {
     @Qualifier("restTemplate")
     private RestTemplate restTemplate;
 
+    @Autowired
+    private LklCrossPayEnv lklCrossPayEnv;
+
     @Before
     public void testSetUp() {
         //注册应用环境
         String pubKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPg0O4rPQJL1O+jqJ4rBjFVNRAuDmBSoii9pYfPQBaescCVY0irkWWoLyfTT65TjvnPpOx+IfNzBTlB13qCEFm7algREoeUHjFgFNHiXJ2LK/R0+VWgXe5+EDFfbrFCPnmLKG3OcKDGQszP0VOf6VVTM1t56CpgaRMm1/+Tzd2TQIDAQAB";
         String privKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKVTYaBXn6fMma0cCR6ss0QXabxV4yVyVoo/RtLejflqeQmeOs9x9pmO2lkrmdkBlrxEl4sl7KwnYswD0iCmvMmUHPz9Z09n5BSRU7xZ3goauT2iIoQOMDe1l2WYJLKjinwLIHqjOyd2spOBHbNsF4QfgisQJleIW3UaW1aYt71hAgMBAAECgYAM68FbiL2fnav9DY3g6dpw3euTnprMGG2PDHb6kA5Eif+/srAh+mQtiC6kfXXesfMX77xwUZx3r/RWwY2wo5dpgWgLxwePYgf4LVMPE5m9WhYEoNMjGTp2fk9BDI8c8F9XVTQX1fyHW4a41XAWUKGzmKCrULQvlNNse6PW3YfliQJBAOQEPJbjquEHzpXNQ7Hfgupo+yLAvHmGc2SOW9nP7saia2xwItKUNLwdxshhrXaB844J1l6qT6XrQCMmYFzU6X8CQQC5nYpeJo70pmJOh/NgFN8pv2Fxf8WQL9QSX1YffCy/Z24OX7j5Hjv/WbRsUXotj8FuxTQjKj+ctx0fLNb6RgkfAkEAgFkKKf05QLX+SUBjrIodzQkO4/8NmHJgHegsN6zdwR3HziBI2bPnA0TXkg+5bo2zpO5QprTDZKfJUH/XmimWzQJAYtmplNaID3aEqDnyvNqgtoT7igx31IAEOvyWyxHAavbUP8dupQ0a+rR1R7JklNsYMrvHNmsLkZRbZ/zjSEoAFQJAG8NYfKLKzd7vIwtnB2LDFEaWYAaifDRLXL4wCFlDV9DmtA+zpfktI6QS880aFs504ki/49SnjcHfDXYfRlnmgg==";
-        LklCrossPayEnv.registerEnv(LklEnv.SANDBOX, "DOPCHN000116", privKey, pubKey);
+        lklCrossPayEnv.registerEnv(LklEnv.SANDBOX, "DOPCHN000116", privKey, pubKey);
     }
 
     /**

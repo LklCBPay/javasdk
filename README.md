@@ -361,8 +361,86 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
 ReconSubscribeRes res = payClient.reconSubscribe(req, head);
 ```
-
 -------
+
+## 批量代收
+### 申请交易令牌
+```java
+ApplyTradeTokenReq order = new ApplyTradeTokenReq();
+
+order.setBizType("DS");
+order.setFileCount("1");
+order.setBizCount("2");
+order.setBizAmount("100");
+order.setSecCode(DateUtil.getCurrentTime());
+//该字段为商户对待上传zip文件内容做MD5后的值，MD5(secCode+内容),参见DigestUtil#fileDigestWithSalt
+String digest = DigestUtil.fileDigestWithSalt(order.getSecCode(), "/Users/jiang/test.zip");
+order.setDigest(digest);
+
+LklCrossPaySuperReq header = new LklCrossPaySuperReq();
+header.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+header.setTs(DateUtil.getCurrentTime());
+header.setVer("3.0.0");
+
+ApplyTradeTokenRes res = batchTradeClient.applyTradeToken(order, header);
+```
+### 上传文件
+```java
+BatUploadFileReq req = new BatUploadFileReq();
+req.setMerchantId(LklCrossPayEnv.getEnvConfig().getMerId());
+//拉卡拉下发的交易令牌
+req.setBizToken("e52f8a52248336a28e0dd3678244e19a5d595ff650b7fae0bacb96151d53285d");
+//根据拉卡拉下发的批次号,修改本地待上传文件名为:商户号_DS_提交日期_批次号_SRC.zip
+req.setFileName("DOPCHN000258_DS_20161031_000005_SRC.zip");
+//该secCode为申请批量交易令牌时商户生成的secCode
+String secCode = "20161031153500000026";
+req.setSecCode(secCode);
+//申请批次号所用盐值+商户号+bizToken+文件名
+String sign = DigestUtil.Encrypt(secCode + "DOPCHN000258" + "e52f8a52248336a28e0dd3678244e19a5d595ff650b7fae0bacb96151d53285d" + "DOPCHN000258_DS_20161031_000005_SRC.zip", "MD5", "UTF-8");
+req.setSign(sign);
+req.setFilePath("/Users/jiang/");
+BatUploadFileRes res = batchTradeClient.uploadFile(req);
+```
+
+### 批量交易状态查询
+```java
+BatchBizQueryReq req = new BatchBizQueryReq();
+eq.setBizToekn("dd567cdc9ba594e9479d15b09ff9addc7292eb3e60e45f83fdc1147b8b5b3f7e");
+
+LklCrossPaySuperReq header = new LklCrossPaySuperReq();
+header.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+header.setTs(DateUtil.getCurrentTime());
+header.setVer("3.0.0");
+
+try {
+    BatchBizQueryRes res = batchTradeClient.batchBizQuery(req, header);
+    logger.info("res={}", res);
+} catch (Exception e) {
+    logger.error(e.getMessage(), e);
+```
+
+### (补)回盘文件下载
+```java
+DownLoadFileReq req = new DownLoadFileReq();
+//该令牌为拉卡拉给商户的下载文件通知中给定
+req.setDownLoadToken("123123kjn12n31j2k31231o2n912h91b231n");
+//true-回盘文件;false-补回盘文件
+req.setResFile(true);
+//该secCode为拉卡拉给商户的下载文件通知中给定
+req.setSecCode("12312nn123n");
+//该文件名为拉卡拉给商户的下载文件通知中给定
+req.setFileName("test.zip");
+//该路径为商户自行设定
+req.setLocalFilePath("/Users/jiang/");
+//该摘要为拉卡拉给商户的下载文件通知中给定
+req.setLklDigest("jnaiusndauwnina182u3102u09");
+try {
+    batchTradeClient.downLoadLklResFile(req);
+} catch (Exception e) {
+    logger.error("下载文件失败", e);
+}
+```
+---
 
 ## 处理拉卡拉跨境支付通知
 ### 若商户选择开启通知响应，即使不实现对应方法sdk会默认响应给拉卡拉跨境为成功。
@@ -377,7 +455,7 @@ public class PayResultNotifyImpl implements WebHookHandler<PayResultNotify> {
     private static final Logger logger = LoggerFactory.getLogger(PayResultNotifyImpl.class);
 
     @Override
-    public void handle(PayResultNotify payResultNotify) throws Exception {
+    public void handle(PayResultNotify payResultNotify) throws LklCommonException {
 
          payResultNotify.getPayResult();
          payResultNotify.getCurrency();
@@ -403,7 +481,7 @@ public class ReconDown implements WebHookHandler<ReconDownload> {
     private static final Logger logger = LoggerFactory.getLogger(ReconDown.class);
 
     @Override
-    public void handle(ReconDownload reconDownload) throws Exception {
+    public void handle(ReconDownload reconDownload) throws LklCommonException {
         String fileName = reconDownload.getFileName();
         InputStream in = reconDownload.getIn();
 
@@ -421,3 +499,47 @@ public class ReconDown implements WebHookHandler<ReconDownload> {
 }
 ```
 该接口对应的url为:``` 商户域名/商户应用上下文/lklreconFile/handle```
+
+### 处理批量交易回调
+开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklBatTradeWebHook”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
+如：
+``` java
+@Component("lklBatTradeWebHook")
+public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
+    private static final Logger logger = LoggerFactory.getLogger(BatTradeWebHook.class);
+
+    public void handle(BatchTradeNotify notifyMsg) throws LklCommonException {
+        logger.info("enter menthod BatTradeWebHook.handle,notifyMsg={}", notifyMsg.toString());
+
+        String notifyType = notifyMsg.getNotifyType();
+        if (null == notifyType || "".equals(notifyType)) {
+            //通过异常传递发送给拉卡拉的消息
+            throw new LklCommonException("通知类型-notifyType为空");
+        }
+        String bizToken = notifyMsg.getBizToken();
+        String bizResult = notifyMsg.getBizResult();
+        String merchantId = notifyMsg.getMerchantId();
+
+        if ("1".equals(notifyType)) {
+            //处理交易结果回调
+        } else if ("2".equals(notifyType)) {
+            //请求通知中downLoadUrl下载回盘文件
+        } else if ("3".equals(notifyType)) {
+            ///请求通知中downLoadUrl下载补回盘文件
+            final String downLoadUrl = notifyMsg.getDownLoadUrl();
+            //此secCode用于校验文件的签名.MD5(secCode+文件内容)
+            final String secCode = notifyMsg.getSecCode();
+            //文件名
+            final String fileName = notifyMsg.getMerchantResFileName();
+            //回盘文件摘要MD5(secCode+文件内容)
+            final String digest = notifyMsg.getDigest();
+
+            //若有错误则通过异常带出消息,如
+            // throw new LklCommonException("XXX失败");
+        }
+    }
+
+}
+```
+该接口对应的url为:``` 商户域名:端口/商户应用上下文/lklBatTrade/webHook```。请事先在拉卡拉跨境支付商户自助服务平台中注册回调地址。
+如需自己实现回调处理流程，可参照BatchTradeWebHook自行实现;BatTradeWebHook为回调业务处理示例

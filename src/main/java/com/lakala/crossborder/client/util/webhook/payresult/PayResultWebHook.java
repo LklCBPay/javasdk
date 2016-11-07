@@ -4,6 +4,8 @@ import com.lakala.crossborder.client.entities.LklCrossPayEncryptReq;
 import com.lakala.crossborder.client.entities.LklCrossPayEncryptRes;
 import com.lakala.crossborder.client.entities.notify.PayResultNotify;
 import com.lakala.crossborder.client.entities.notify.PayResultNotifyResponse;
+import com.lakala.crossborder.client.exception.LklCommonException;
+import com.lakala.crossborder.client.exception.LklEncryptException;
 import com.lakala.crossborder.client.util.LklMsgUtil;
 import com.lakala.crossborder.client.util.webhook.LklWebHookIntf;
 import com.lakala.crossborder.client.util.webhook.WebHookHandler;
@@ -41,6 +43,11 @@ public class PayResultWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, L
         logger.debug("entering method proceed,req={}", notify.toString());
         PayResultNotify payResultNotify = null;
         LklCrossPayEncryptRes res = new LklCrossPayEncryptRes();
+        res.setMerId(notify.getMerId());
+        res.setTs(notify.getTs());
+        res.setReqType("B0005");
+        res.setRetCode("0000");
+        res.setVer("1.0.0");
 
         try {
             payResultNotify = LklMsgUtil.decryptMsgFromLkl(notify, PayResultNotify.class);
@@ -49,19 +56,21 @@ public class PayResultWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, L
             response.setMerOrderId(payResultNotify.getMerOrderId());
             response.setTransactionId(payResultNotify.getTransactionId());
 
-            res.setMerId(notify.getMerId());
-            res.setTs(notify.getTs());
-            res.setReqType("B0005");
-            res.setRetCode("0000");
-            res.setVer("1.0.0");
             res = LklMsgUtil.encryptWebHookMsg(response, res);
-
-            logger.debug("exiting method proceed,res ={}", res.toString());
-            return res;
+        } catch (LklCommonException e) {
+            logger.error("lakala batch trade error", e);
+            res.setRetCode("9999");
+            res.setRetMsg(e.getMessage());
+        } catch (LklEncryptException e) {
+            logger.error("lakala batch trade error", e);
+            res.setRetCode("9999");
+            res.setRetMsg(e.getMessage());
         } catch (Exception e) {
-            logger.error("payResult error", e);
+            logger.error("lakala batch trade error", e);
+            res.setRetCode("9999");
+            res.setRetMsg("系统异常");
         }
-
-        return null;
+        logger.debug("exiting method proceed,res ={}", res.toString());
+        return res;
     }
 }

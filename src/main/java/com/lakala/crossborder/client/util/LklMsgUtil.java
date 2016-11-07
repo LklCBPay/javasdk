@@ -41,12 +41,14 @@ public class LklMsgUtil {
         String privateKey = LklCrossPayEnv.getEnvConfig().getPrivateKey();
         String merId = LklCrossPayEnv.getEnvConfig().getMerId();
         String ts = dataHead.getTs();
+        String ver = dataHead.getVer();
+
         //生成32位随机串
         //generate des key ,length is 32.the key is used to encrypt the biz data
-        String desKey = ToolsUtil.getMerKey();
+        String secKey = ToolsUtil.getMerKey();
         //时间戳拼接对称密钥的hex，用响应方公钥加密，生成加密密钥密文，hex编码,生成encKey
         //the unencrypted enckey string =timestamp(yyyyMMddHHmmssssssss.refer to DateUtil.getCurrentTime())+des key
-        String encKeyStr = ts + desKey;
+        String encKeyStr = ts + secKey;
         String encKey = null;
         try {
             //encrypted encKey
@@ -59,12 +61,17 @@ public class LklMsgUtil {
         //生成encData
         String encData;
         try {
-            //use desc key to encrypt the biz data
-            encData = ByteArrayUtil.byteArray2HexString(DESCrypto.enCrypto(bizJson.getBytes("GBK"), desKey));
+            if ("3.0.0".equals(ver.trim())) {
+                //use seckey to encrypt the biz data
+                encData = ByteArrayUtil.byteArray2HexString(AESCrypto.encrypt(bizJson, secKey));
+            } else {
+                //use seckey to encrypt the biz data
+                encData = ByteArrayUtil.byteArray2HexString(DESCrypto.enCrypto(bizJson.getBytes("GBK"), secKey));
+            }
         } catch (UnsupportedEncodingException e) {
             throw new LklEncryptException("加密业务参数失败", e);
         }
-        String ver = dataHead.getVer();
+
 
         //the unencrypted mac string
         String macStr = null;
@@ -76,12 +83,15 @@ public class LklMsgUtil {
             } else {
                 macStr = merId + ver + ts + reqType + encData + payTypeId;
             }
-        } else if ("2.0.0".equals(ver.trim())) {
+        } else if ("2.0.0".equals(ver.trim()) || "3.0.0".equals(ver.trim())) {
             macStr = merId + ver + ts + encData;
         }
-        //SHA-1
-        //first encrypt mac with sha-1
-        macStr = DigestUtil.Encrypt(macStr, "SHA-1");
+        //first encrypt mac with sha
+        if ("3.0.0".equals(ver.trim())) {
+            macStr = DigestUtil.Encrypt(macStr, "SHA-256");
+        } else {
+            macStr = DigestUtil.Encrypt(macStr, "SHA-1");
+        }
         //生成MAC
         String mac = null;
         try {
@@ -141,6 +151,8 @@ public class LklMsgUtil {
             }
         } else if ("2.0.0".equals(ver.trim())) {
             retMacStr = DigestUtil.Encrypt(retCode + retMsg + merId + ver + ts + encData, "SHA-1");
+        } else if ("3.0.0".equals(ver.trim())) {
+            retMacStr = DigestUtil.Encrypt(retCode + retMsg + merId + ver + ts + encData, "SHA-256");
         }
         try {
             //then generate ur local encrypted mac string
@@ -148,7 +160,7 @@ public class LklMsgUtil {
         } catch (Exception e) {
             throw new LklEncryptException("mac解密失败", e);
         }
-        //比较报文中mac sha1与本地mac sha1是否相等
+        //比较报文中mac sha1与本地mac sha是否相等
         //see if ur local mac is the same to mac from lakala
         if (!reqMacStr.equals(retMacStr)) {
             throw new LklEncryptException("mac校验失败");
@@ -158,9 +170,13 @@ public class LklMsgUtil {
         String key = ToolsUtil.getMerKey();
         String requestData = null;
 
+        //decrypt response msg from lakala
         try {
-            //decrypt response msg from lakala
-            requestData = new String(DESCrypto.deCrypt(ByteArrayUtil.hexString2ByteArray(encData), key), "GBK");
+            if ("3.0.0".equals(ver.trim())) {
+                requestData = new String(AESCrypto.decrypt(ByteArrayUtil.hexString2ByteArray(encData), key), "GBK");
+            } else {
+                requestData = new String(DESCrypto.deCrypt(ByteArrayUtil.hexString2ByteArray(encData), key), "GBK");
+            }
         } catch (UnsupportedEncodingException e) {
             throw new LklEncryptException("业务参数解密失败", e);
         }
@@ -173,9 +189,9 @@ public class LklMsgUtil {
 
 
     /**
-     * 解密拉卡拉回调消息
+     * 解密拉卡拉回调消息.
+     * <b>ver=3.0.0的回调消息中会ver这个字段，其他则没有</b>
      * decrypt the webhook msg from lakala,des key should  get from the method :getMerchantKey
-     *
      *
      * @param lklCrossPayEncryptReq
      * @param resClazz
@@ -187,6 +203,7 @@ public class LklMsgUtil {
         String ts = lklCrossPayEncryptReq.getTs();
         String encData = lklCrossPayEncryptReq.getEncData();
         String reqType = lklCrossPayEncryptReq.getReqType();
+        String ver = lklCrossPayEncryptReq.getVer();
         //encrypted mac string from lakala
         String mac = lklCrossPayEncryptReq.getMac();
 
@@ -195,6 +212,9 @@ public class LklMsgUtil {
         String reqMacStr = null;
         //本地mac sha1字符串
         String retMacStr = DigestUtil.Encrypt(ts + reqType + encData + "", "SHA-1");
+        if ("3.0.0".equals(ver.trim())) {
+            retMacStr = DigestUtil.Encrypt(ts + reqType + encData + "", "SHA-256");
+        }
         try {
             reqMacStr = new String(RSAUtil.decryptByPublicKey(ByteArrayUtil.hexString2ByteArray(mac), LklCrossPayEnv.getEnvConfig().getPublicKey()));
         } catch (Exception e) {
@@ -215,8 +235,13 @@ public class LklMsgUtil {
         //用获得的对称密钥解密加密业务参数
         String requestData = null;
         try {
-            //decrypt biz data with des key
-            requestData = new String(DESCrypto.deCrypt(ByteArrayUtil.hexString2ByteArray(encData), desKey), "GBK");
+            //decrypt biz data with key
+            if ("3.0.0".equals(ver.trim())) {
+                requestData = new String(AESCrypto.decrypt(ByteArrayUtil.hexString2ByteArray(encData), desKey), "GBK");
+            } else {
+                requestData = new String(DESCrypto.deCrypt(ByteArrayUtil.hexString2ByteArray(encData), desKey), "GBK");
+            }
+
         } catch (UnsupportedEncodingException e) {
             throw new LklEncryptException("业务参数解密失败", e);
         }
@@ -236,33 +261,49 @@ public class LklMsgUtil {
     public static LklCrossPayEncryptRes encryptWebHookMsg(SuperWebHookResponse webHookResponse, LklCrossPayEncryptRes encryptRes) {
         String publicKey = LklCrossPayEnv.getEnvConfig().getPublicKey();
         String privateKey = LklCrossPayEnv.getEnvConfig().getPrivateKey();
+
+        String retCode = encryptRes.getRetCode();
+        String retMsg = encryptRes.getRetMsg();
         String ts = encryptRes.getTs();
-        //get des key from threadlocal
-        String desKey = ToolsUtil.getMerKey();
+        String ver = encryptRes.getVer();
+        //get seckey from threadlocal
+        String secKey = ToolsUtil.getMerKey();
         //unencrypted  enc key string
-        String encKeyStr = ts + desKey;
-        String encKey = null;
-        try {
-            //encrypt enc key string
-            encKey = ByteArrayUtil.byteArray2HexString(RSAUtil.encryptByPublicKey(encKeyStr.getBytes("GBK"), publicKey));
-        } catch (Exception e) {
-            throw new LklEncryptException("生成encKey失败", e);
-        }
+//        String encKeyStr = ts + secKey;
+//        String encKey = null;
+//        try {
+//            //encrypt enc key string
+//            encKey = ByteArrayUtil.byteArray2HexString(RSAUtil.encryptByPublicKey(encKeyStr.getBytes("GBK"), publicKey));
+//        } catch (Exception e) {
+//            throw new LklEncryptException("生成encKey失败", e);
+//        }
         Gson json = new Gson();
-        String bizJson = json.toJson(webHookResponse);
+
         //生成encData
-        String encData;
+        String encData = "";
         try {
-            //encrypt biz data with the desc key
-            encData = ByteArrayUtil.byteArray2HexString(DESCrypto.enCrypto(bizJson.getBytes("GBK"), desKey));
+            String bizJson = json.toJson(webHookResponse);
+            //encrypt biz data with the des key
+            if ("3.0.0".equals(ver.trim())) {
+                encData = ByteArrayUtil.byteArray2HexString(AESCrypto.encrypt(bizJson, secKey));
+            } else {
+                encData = ByteArrayUtil.byteArray2HexString(DESCrypto.enCrypto(bizJson.getBytes("GBK"), secKey));
+            }
+
         } catch (UnsupportedEncodingException e) {
             throw new LklEncryptException("加密业务参数失败", e);
         }
         String reqType = encryptRes.getReqType();
         //generate mac string
-        String macStr = ts + reqType + encData;
-        //SHA-1
-        macStr = DigestUtil.Encrypt(macStr, "SHA-1");
+        String macStr = null;
+        //SHA
+        if ("3.0.0".equals(ver.trim())) {
+            macStr = retCode + retMsg + ts + reqType;
+            macStr = DigestUtil.Encrypt(macStr, "SHA-256");
+        } else {
+            macStr = ts + reqType + encData;
+            macStr = DigestUtil.Encrypt(macStr, "SHA-1");
+        }
         //生成MAC
         String mac = null;
         try {
@@ -272,11 +313,12 @@ public class LklMsgUtil {
             throw new LklEncryptException(e);
         }
         encryptRes.setMac(mac);
-        encryptRes.setEncKey(encKey);
+//        encryptRes.setEncKey(encKey);
         encryptRes.setEncData(encData);
         ToolsUtil.remove();
         return encryptRes;
     }
+
 
     /**
      * 计算请求方对称密钥
