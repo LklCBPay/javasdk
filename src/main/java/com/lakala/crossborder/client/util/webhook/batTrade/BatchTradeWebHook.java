@@ -51,6 +51,7 @@ public class BatchTradeWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, 
         res.setTs(notify.getTs());
         res.setReqType("B0005");
         res.setRetCode("0000");
+        res.setRetMsg("成功");
         res.setVer("3.0.0");
 
         try {
@@ -67,9 +68,6 @@ public class BatchTradeWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, 
                 batchTradeNotify.setMerchantId(notify.getMerId());
                 webHookIntf.handle(batchTradeNotify);
             }
-            logger.info("response is {}", response.toString());
-            //加密明文响应报文
-            res = LklMsgUtil.encryptWebHookMsg(response, res);
         } catch (LklCommonException e) {
             logger.error("lakala batch trade webhook error", e);
             res.setRetCode("9999");
@@ -83,7 +81,9 @@ public class BatchTradeWebHook implements LklWebHookIntf<LklCrossPayEncryptRes, 
             res.setRetCode("9999");
             res.setRetMsg("系统异常");
         }
-
+        //加密明文响应报文
+        logger.info("response is {}", response.toString());
+        res = LklMsgUtil.encryptWebHookMsg(response, res);
         logger.debug("exiting method proceed,res ={}", res.toString());
         return res;
     }

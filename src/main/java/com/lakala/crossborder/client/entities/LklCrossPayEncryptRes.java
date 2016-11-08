@@ -46,6 +46,7 @@ public class LklCrossPayEncryptRes extends LklCrossPaySuperRes {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("LklCrossPayEncryptRes{");
+        sb.append("super='").append(super.toString()).append('\'');
         sb.append(", encData='").append(encData).append('\'');
         sb.append(", encKey='").append(encKey).append('\'');
         sb.append(", mac='").append(mac).append('\'');
