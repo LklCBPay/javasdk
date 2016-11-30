@@ -95,7 +95,7 @@ public class LklCbPayBatchTradeClient {
             File file = new File(filePath + fileName);
             FileEntity fileEntity = new FileEntity(file);
             fileEntity.setContentEncoding("UTF-8");
-            fileEntity.setChunked(true);
+            fileEntity.setChunked(false);
             fileEntity.setContentType("binary/octet-stream");
             String reqUrl = LklCrossPayEnv.getEnvConfig().getServer() + ":" + LklCrossPayEnv.getEnvConfig().getPort() + "/gate/batchBizFileUpload/" + order.getMerchantId() + "/" + order.getFileName() + "/" + order.getBizToken() + "/" + order.getSign();
             HttpPost httpPost = new HttpPost(reqUrl);
