@@ -36,12 +36,12 @@ public class BatchTradeNotify extends SuperWebHookRequest {
      */
     private String notifyType;
     /**
-     * notifyType为2、3时，该字段有值
+     * notifyType为02、03时，该字段有值
      */
     private String downLoadToken;
 
     /**
-     * 当notifyType为1时，该字段有值
+     * 当notifyType为01时，该字段有值
      * <ui>
      * <li>00-商户送盘文件名错误；</li>
      * <li>01-商户送盘文件头格式错误；</li>
@@ -56,60 +56,60 @@ public class BatchTradeNotify extends SuperWebHookRequest {
 
     /**
      * 商户送盘日期：yyyymmdd
-     * notifyType为2、3时，该字段有值
+     * notifyType为02、03时，该字段有值
      */
     private String receiveDate;
 
     /**
      * 交易类型，默认为DS
-     * notifyType为2、3时，该字段有值
+     * notifyType为02、03时，该字段有值
      */
     private String bizType;
 
     /**
      * 商户（补）回盘文件名
-     * notifyType为2、3时，该字段有值
+     * notifyType为02、03时，该字段有值
      */
     private String merchantResFileName;
 
     /**
      * 商户送盘文件名
-     * notifyType为2时，该字段有值
+     * notifyType为02时，该字段有值
      */
     private String merchantFileName;
 
     /**
-     * zip包内文件数量，notifyType为2时，该字段有值
+     * zip包内文件数量，notifyType为02时，该字段有值
      */
     private String fileCount;
 
     /**
-     * 包内总交易笔数，notifyType为2时，该字段有值
+     * 包内总交易笔数，notifyType为02时，该字段有值
      */
     private String totalBizCount;
 
     /**
-     * 包内总交易金额，单位：分,notifyType为2时，该字段有值
+     * 包内总交易金额，单位：分,notifyType为02时，该字段有值
      */
     private String totalBizAmount;
 
     /**
-     * 成功交易笔数，notifyType为2时，该字段有值
+     * 成功交易笔数，notifyType为02时，该字段有值
      */
     private String successBizCount;
 
     /**
-     * 成功金额，单位：分，notifyType为2时，该字段有值
+     * 成功金额，单位：分，notifyType为02时，该字段有值
      */
     private String successBizAmount;
 
     /**
-     * 文件摘要盐值，YYYYMMDDHHMISS+6位随机数，notifyType为2、3时，该字段有值
+     * 文件摘要盐值，YYYYMMDDHHMISS+6位随机数，notifyType为02、03时，该字段有值
      */
     private String secCode;
 
     /**
-     * 文件摘要，MD5（secCode+文件内容），notifyType为2、3时，该字段有值
+     * 文件摘要，MD5（secCode+文件内容），notifyType为02、03时，该字段有值
      */
     private String digest;
 
