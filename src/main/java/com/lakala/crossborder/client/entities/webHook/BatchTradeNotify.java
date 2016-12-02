@@ -29,9 +29,9 @@ public class BatchTradeNotify extends SuperWebHookRequest {
     /**
      * 回调通知类型
      * <ul>
-     * <li>1-交易结果回调</li>
-     * <li>2-下载回盘文件通知</li>
-     * <li>3-下载补回盘文件通知</li>
+     * <li>01-交易结果回调</li>
+     * <li>02-下载回盘文件通知</li>
+     * <li>03-下载补回盘文件通知</li>
      * </ul>
      */
     private String notifyType;
