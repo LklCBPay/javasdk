@@ -29,10 +29,10 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
         String bizToken = notifyMsg.getBizToken();
         String merchantId = notifyMsg.getMerchantId();
 
-        if ("1".equals(notifyType)) {
+        if ("01".equals(notifyType)) {
             //处理交易结果回调
             String bizResult = notifyMsg.getBizResult();
-        } else if ("2".equals(notifyType)) {
+        } else if ("02".equals(notifyType)) {
             //此secCode用于校验文件的签名.MD5(secCode+文件内容)
             String secCode = notifyMsg.getSecCode();
             //文件名
@@ -44,7 +44,7 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
 
             //若有错误则通过异常带出消息,如
             // throw new LklCommonException("XXX失败");
-        } else if ("3".equals(notifyType)) {
+        } else if ("03".equals(notifyType)) {
             //此secCode用于校验文件的签名.MD5(secCode+文件内容)
             String secCode = notifyMsg.getSecCode();
             //文件名
