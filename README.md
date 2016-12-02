@@ -521,11 +521,11 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
         String bizResult = notifyMsg.getBizResult();
         String merchantId = notifyMsg.getMerchantId();
 
-        if ("1".equals(notifyType)) {
+        if ("01".equals(notifyType)) {
             //处理交易结果回调
-        } else if ("2".equals(notifyType)) {
+        } else if ("02".equals(notifyType)) {
             //请求通知中downLoadUrl下载回盘文件
-        } else if ("3".equals(notifyType)) {
+        } else if ("03".equals(notifyType)) {
             ///请求通知中downLoadUrl下载补回盘文件
             final String downLoadUrl = notifyMsg.getDownLoadUrl();
             //此secCode用于校验文件的签名.MD5(secCode+文件内容)
