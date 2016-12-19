@@ -28,7 +28,6 @@ public class LklCrossPayRestfulClent {
 
     private static final Logger logger = LoggerFactory.getLogger(LklCrossPayRestfulClent.class);
 
-    private static final String LINK = "/";
 
     @Autowired
     @Qualifier("restTemplate")
