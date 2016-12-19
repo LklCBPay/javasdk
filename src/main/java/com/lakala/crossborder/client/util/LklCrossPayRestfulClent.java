@@ -48,7 +48,7 @@ public class LklCrossPayRestfulClent {
     public <T extends LklCrossPaySuperRes> T doPost(Class<T> responseClazz, LklCrossPaySuperReq orderBill, String bizReq) throws LklClientException {
         T result = null;
         Gson json = new Gson();
-        String reqUrl = LklCrossPayEnv.getEnvConfig().getServer() + ":" + LklCrossPayEnv.getEnvConfig().getPort() + LINK + bizReq;
+        String reqUrl = LklCrossPayEnv.getEnvConfig().getServer() + ":" + LklCrossPayEnv.getEnvConfig().getPort() + bizReq;
         try {
             ResponseEntity<T> respone = restTemplate.postForEntity(reqUrl, orderBill, responseClazz);
             result = respone.getBody();
@@ -85,7 +85,7 @@ public class LklCrossPayRestfulClent {
     public <T extends LklCrossPaySuperRes> T doGet(Class<T> responseClazz, Map<String, String> queryPara, String bizReq) throws LklClientException {
         T result = null;
         Gson json = new Gson();
-        String reqUrl = LklCrossPayEnv.getEnvConfig().getServer() + ":" + LklCrossPayEnv.getEnvConfig().getPort() + LINK + bizReq;
+        String reqUrl = LklCrossPayEnv.getEnvConfig().getServer() + ":" + LklCrossPayEnv.getEnvConfig().getPort() + bizReq;
 
         try {
             ResponseEntity<T> respone = restTemplate.getForEntity(reqUrl, responseClazz, queryPara);
