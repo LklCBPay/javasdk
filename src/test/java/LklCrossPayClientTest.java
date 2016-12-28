@@ -280,6 +280,8 @@ public class LklCrossPayClientTest {
         head.setVer("1.0.0");
         head.setTs(DateUtil.getCurrentTime());
         head.setReqType("B0007");
+        //根据商户开通的产品设置
+        head.setPayTypeId("4");
         head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
         OrderQueryRes res = queryClient.orderQuery(req, head);
