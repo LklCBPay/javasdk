@@ -444,7 +444,35 @@ try {
 }
 ```
 ---
+## 认证服务
+### 认证接口
+```java
+        AuthReq authReq = new AuthReq();
+        //订单号,不可重复
+        authReq.setOrderNo("123123123");
+        //姓名
+        authReq.setName("蒋志飞");
+        //证件类型,目前默认为00-身份证
+        authReq.setCertType("00");
+        //证件号
+        authReq.setCertNo("321088198308252015");
+        //认证类型
+        authReq.setBizType("00");
 
+        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        head.setVer("3.0.0");
+        head.setTs(DateUtil.getCurrentTime());
+        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        try {
+            AuthRes authRes = authClient.auth(authReq, head);
+            logger.info("认证结果{},msg={}", new String[]{authRes.getRetCode(), authRes.getRetMsg()});
+        } catch (LklClientException e) {
+            logger.error("认证异常", e);
+        }
+```
+
+---
 ## 处理拉卡拉跨境支付通知
 ### 若商户选择开启通知响应，即使不实现对应方法sdk会默认响应给拉卡拉跨境为成功。
 
