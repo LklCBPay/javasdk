@@ -451,11 +451,11 @@ try {
         //订单号,不可重复
         authReq.setOrderNo("123123123");
         //姓名
-        authReq.setName("蒋志飞");
+        authReq.setName("蒋XX");
         //证件类型,目前默认为00-身份证
         authReq.setCertType("00");
         //证件号
-        authReq.setCertNo("321088198308252015");
+        authReq.setCertNo("321111111111111111");
         //认证类型
         authReq.setBizType("00");
 
