@@ -408,7 +408,7 @@ BatUploadFileRes res = batchTradeClient.uploadFile(req);
 ### 批量交易状态查询
 ```java
 BatchBizQueryReq req = new BatchBizQueryReq();
-eq.setBizToekn("dd567cdc9ba594e9479d15b09ff9addc7292eb3e60e45f83fdc1147b8b5b3f7e");
+req.setBizToekn("dd567cdc9ba594e9479d15b09ff9addc7292eb3e60e45f83fdc1147b8b5b3f7e");
 
 LklCrossPaySuperReq header = new LklCrossPaySuperReq();
 header.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
