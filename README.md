@@ -1,4 +1,4 @@
-#Read me
+# Read me
 
 [![Build Status](https://travis-ci.org/LklCBPay/javasdk.svg?branch=master)](https://travis-ci.org/LklCBPay/javasdk)
 
@@ -14,7 +14,7 @@
         * java 1.6+
         * spring
         * maven
----------------
+---
 ### sdk集成指南
 * 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
