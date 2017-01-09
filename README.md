@@ -45,8 +45,7 @@ defaultMaxPerRoute=200
 > 若需要启用sdk包中监听拉卡拉跨境回调商户的接口需对springmvc做配置
 
 > 1. 商户需开启 ```<mvc:annotation-driven/>``` 
-> 2. 设置springmvc扫描包 
-```<context:component-scan base-package="com.lakala.crossborder.client.util.webhook"/> ```
+> 2. 设置springmvc扫描包 ```<context:component-scan base-package="com.lakala.crossborder.client.util.webhook"/> ```
 
 * 如无需启用sdk包中监听拉卡拉跨境回调则直接在自己项目中引入sdk开发包spring配置即可
 
