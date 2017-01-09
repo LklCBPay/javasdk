@@ -16,6 +16,7 @@
         * maven
 
 ---
+
 ### sdk集成指南
 * 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
 
@@ -380,6 +381,7 @@ ReconSubscribeRes res = payClient.reconSubscribe(req, head);
 -------
 
 ## 批量代收
+
 ### 申请交易令牌
 
 ```java
@@ -401,6 +403,7 @@ header.setVer("3.0.0");
 
 ApplyTradeTokenRes res = batchTradeClient.applyTradeToken(order, header);
 ```
+
 ### 上传文件
 
 ```java
@@ -461,7 +464,9 @@ try {
 }
 ```
 ---
+
 ## 认证服务
+
 ### 认证接口
 
 ```java
