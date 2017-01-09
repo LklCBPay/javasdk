@@ -496,8 +496,8 @@ try {
 ### 处理支付结果通知
 开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklpayResultHandle”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
 如：
-```java
 
+```java
 @Component("lklpayResultHandle")
 public class PayResultNotifyImpl implements WebHookHandler<PayResultNotify> {
     private static final Logger logger = LoggerFactory.getLogger(PayResultNotifyImpl.class);
