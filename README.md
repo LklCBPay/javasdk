@@ -14,6 +14,7 @@
         * java 1.6+
         * spring
         * maven
+
 ---
 ### sdk集成指南
 * 在开发者自己项目类路径中添加文件lklconfig.properties。该用文件用于定义httpClient连接池配置项。如下：
@@ -129,7 +130,7 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 PaymentRes res = payClient.pay(payOrder, head);
 ```
 
-###支付短信验证码重新发送
+### 支付短信验证码重新发送
 
 ```java
 LklOtpReq req = new LklOtpReq();
@@ -145,7 +146,7 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 LklOtpRes res = payClient.sendOtp(req, head);
 ```
 
-###单笔实时收款
+### 单笔实时收款
 
 ```java
 LklGatherReq req = new LklGatherReq();
@@ -187,7 +188,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 LklGatherRes res = payClient.gather(req, head);
 ```
 
-###单笔实时代付
+### 单笔实时代付
+
 ```java
 LklPayAgentReq req = new LklPayAgentReq();
 
@@ -216,7 +218,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 LklPayAgentRes res = payClient.agentPay(req, head);
 ```
 
-###汇率查询
+### 汇率查询
+
 ```java
 ExchangeRateQueryReq req = new ExchangeRateQueryReq();
 req.setCurrency(LklCurrency.AUD.getCode());
@@ -232,7 +235,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 ExchangeRateQueryRes res = queryClient.exchangeRateQuery(req, head);
 ```
 
-###订单查询
+### 订单查询
+
 ```java
 OrderQueryReq req = new OrderQueryReq();
 req.setMerOrderId("SH20160420194553");
@@ -249,7 +253,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 OrderQueryRes res = queryClient.orderQuery(req, head);
 ```
 
-###签约查询
+### 签约查询
+
 ```java
 SignQueryReq req = new SignQueryReq();
 req.setCardNo("6222000000000000000");
@@ -267,7 +272,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 SignQueryRes res = queryClient.signQuery(req, head);
 ```
 
-###单笔实时代付状态查询
+### 单笔实时代付状态查询
+
 ```java
 AgentPayStatusQueryReq req = new AgentPayStatusQueryReq();
 req.setMerOrderId("SH20160420195553");
@@ -280,7 +286,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 AgentPayStatusQueryRes res = queryClient.agentPayStatusQuery(req, head);
 ```
 
-###商户代付账户余额查询
+### 商户代付账户余额查询
+
 ```java
 AgentPayAcctBalanceQueryReq req = new AgentPayAcctBalanceQueryReq();
 req.setCurrency(LklCurrency.CNY.getCode());
@@ -293,7 +300,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 AgentPayAcctBalanceQueryRes res = queryClient.agentPayAcctBalanceQuery(req, head);
 ```
 
-###退款接口
+### 退款接口
+
 ```java
 RefundReq req = new RefundReq();
 req.setMerOrderId("SH20160420194753");
@@ -312,7 +320,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 RefundRes res = payClient.refun(req, head);
 ```
 
-###用户签约
+### 用户签约
+
 ```java
 SignReq req = new SignReq();
 req.setCardNo("6222000000000000000");
@@ -330,7 +339,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 SignRes res = signClient.sign(req, head);
 ```
 
-###用户签约验证
+### 用户签约验证
+
 ```java
 SignVerifyReq req = new SignVerifyReq();
 
@@ -349,7 +359,8 @@ head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 SignVerifyRes res = signClient.signVerify(req, head);
 ```
 
-###对账文件预约下载
+### 对账文件预约下载
+
 ```java
 ReconSubscribeReq req = new ReconSubscribeReq();
 req.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
@@ -368,6 +379,7 @@ ReconSubscribeRes res = payClient.reconSubscribe(req, head);
 
 ## 批量代收
 ### 申请交易令牌
+
 ```java
 ApplyTradeTokenReq order = new ApplyTradeTokenReq();
 
@@ -388,6 +400,7 @@ header.setVer("3.0.0");
 ApplyTradeTokenRes res = batchTradeClient.applyTradeToken(order, header);
 ```
 ### 上传文件
+
 ```java
 BatUploadFileReq req = new BatUploadFileReq();
 req.setMerchantId(LklCrossPayEnv.getEnvConfig().getMerId());
@@ -406,6 +419,7 @@ BatUploadFileRes res = batchTradeClient.uploadFile(req);
 ```
 
 ### 批量交易状态查询
+
 ```java
 BatchBizQueryReq req = new BatchBizQueryReq();
 req.setBizToekn("dd567cdc9ba594e9479d15b09ff9addc7292eb3e60e45f83fdc1147b8b5b3f7e");
@@ -423,6 +437,7 @@ try {
 ```
 
 ### (补)回盘文件下载
+
 ```java
 DownLoadFileReq req = new DownLoadFileReq();
 //该令牌为拉卡拉给商户的下载文件通知中给定
@@ -446,6 +461,7 @@ try {
 ---
 ## 认证服务
 ### 认证接口
+
 ```java
         AuthReq authReq = new AuthReq();
         //订单号,不可重复
@@ -533,6 +549,7 @@ public class ReconDown implements WebHookHandler<ReconDownload> {
 ### 处理批量交易回调
 开发者只需实现WebHookHandler接口并实现对应方法即可,bean id需要指定为“lklBatTradeWebHook”。如果handle方法不抛出异常，则认为是处理成功。sdk响应给拉卡拉跨境为成功。
 如：
+
 ``` java
 @Component("lklBatTradeWebHook")
 public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
@@ -571,5 +588,6 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
 
 }
 ```
+
 该接口对应的url为:``` 商户域名:端口/商户应用上下文/lklBatTrade/webHook```。请事先在拉卡拉跨境支付商户自助服务平台中注册回调地址。
 如需自己实现回调处理流程，可参照BatchTradeWebHook自行实现;BatTradeWebHook为回调业务处理示例
