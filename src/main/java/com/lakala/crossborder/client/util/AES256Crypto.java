@@ -98,22 +98,4 @@ public class AES256Crypto {
         return null;
     }
 
-    public static void main(String[] args) throws UnsupportedEncodingException, NoSuchProviderException {
-        String secKey = "BDLLQ2J821P40UNVSSNFSEDUVROW0GDA";
-//        String secKey = "123F";
-        System.out.println(secKey);
-
-
-        String bizJson = "test123";
-
-        String encData = ByteArrayUtil.byteArray2HexString(AES256Crypto.encrypt(bizJson, secKey));
-
-        String str = new String(AES256Crypto.decrypt(ByteArrayUtil.hexString2ByteArray(encData), "BDLLQ2J821P40UNVSSNFSEDUVROW0GDA"), "GBK");
-
-        System.out.println(encData);
-
-        System.out.println(str);
-
-    }
-
 }
