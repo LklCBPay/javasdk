@@ -131,7 +131,7 @@ public class EnhancedRSAUtil {
     public static byte[] encryptByPublicKey(byte[] data, String publicKey) throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
         Key publicK = keyFactory.generatePublic(x509KeySpec);
         // 对数据加密
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
@@ -171,7 +171,7 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
 
@@ -212,7 +212,7 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, privateK);
@@ -252,7 +252,7 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
         Key publicK = keyFactory.generatePublic(x509KeySpec);
         Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, publicK);
