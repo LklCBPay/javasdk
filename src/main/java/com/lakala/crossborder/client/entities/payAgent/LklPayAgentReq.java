@@ -120,6 +120,11 @@ public class LklPayAgentReq implements Serializable {
      */
     private String bgUrl;
 
+    /**
+     * 商户客户会员ID,必填 无会员填写“NA”
+     */
+    private String customNumberId;
+
     public String getMerOrderId() {
         return merOrderId;
     }
@@ -286,6 +291,14 @@ public class LklPayAgentReq implements Serializable {
 
     public void setBgUrl(String bgUrl) {
         this.bgUrl = bgUrl;
+    }
+
+    public String getCustomNumberId() {
+        return customNumberId;
+    }
+
+    public void setCustomNumberId(String customNumberId) {
+        this.customNumberId = customNumberId;
     }
 
     @Override

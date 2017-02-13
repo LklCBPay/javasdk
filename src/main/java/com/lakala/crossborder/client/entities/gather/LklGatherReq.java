@@ -118,6 +118,11 @@ public class LklGatherReq implements Serializable {
     private String ext2;
 
     /**
+     * 商户客户会员ID,必填 无会员填写“NA”
+     */
+    private String customNumberId;
+
+    /**
      * 扩展信息，字段参见接口文档对应章节
      */
     private Map<String, String> extension;
@@ -304,6 +309,14 @@ public class LklGatherReq implements Serializable {
 
     public void setExtension(Map<String, String> extension) {
         this.extension = extension;
+    }
+
+    public String getCustomNumberId() {
+        return customNumberId;
+    }
+
+    public void setCustomNumberId(String customNumberId) {
+        this.customNumberId = customNumberId;
     }
 
     @Override

@@ -108,6 +108,11 @@ public class SubmitOrderReq implements Serializable {
      */
     private String isMergeSign;
 
+    /**
+     * 商户客户会员ID,必填 无会员填写“NA”
+     */
+    private String customNumberId;
+
     private String ext1;
 
     /**
@@ -294,5 +299,13 @@ public class SubmitOrderReq implements Serializable {
 
     public void setExtension(Map<String, String> extension) {
         this.extension = extension;
+    }
+
+    public String getCustomNumberId() {
+        return customNumberId;
+    }
+
+    public void setCustomNumberId(String customNumberId) {
+        this.customNumberId = customNumberId;
     }
 }

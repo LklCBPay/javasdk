@@ -70,8 +70,8 @@ public class LklCrossPayClientTest {
     public void testSetUp() {
         //注册应用环境
         String pubKey = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPg0O4rPQJL1O+jqJ4rBjFVNRAuDmBSoii9pYfPQBaescCVY0irkWWoLyfTT65TjvnPpOx+IfNzBTlB13qCEFm7algREoeUHjFgFNHiXJ2LK/R0+VWgXe5+EDFfbrFCPnmLKG3OcKDGQszP0VOf6VVTM1t56CpgaRMm1/+Tzd2TQIDAQAB";
-        String privKey = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKVTYaBXn6fMma0cCR6ss0QXabxV4yVyVoo/RtLejflqeQmeOs9x9pmO2lkrmdkBlrxEl4sl7KwnYswD0iCmvMmUHPz9Z09n5BSRU7xZ3goauT2iIoQOMDe1l2WYJLKjinwLIHqjOyd2spOBHbNsF4QfgisQJleIW3UaW1aYt71hAgMBAAECgYAM68FbiL2fnav9DY3g6dpw3euTnprMGG2PDHb6kA5Eif+/srAh+mQtiC6kfXXesfMX77xwUZx3r/RWwY2wo5dpgWgLxwePYgf4LVMPE5m9WhYEoNMjGTp2fk9BDI8c8F9XVTQX1fyHW4a41XAWUKGzmKCrULQvlNNse6PW3YfliQJBAOQEPJbjquEHzpXNQ7Hfgupo+yLAvHmGc2SOW9nP7saia2xwItKUNLwdxshhrXaB844J1l6qT6XrQCMmYFzU6X8CQQC5nYpeJo70pmJOh/NgFN8pv2Fxf8WQL9QSX1YffCy/Z24OX7j5Hjv/WbRsUXotj8FuxTQjKj+ctx0fLNb6RgkfAkEAgFkKKf05QLX+SUBjrIodzQkO4/8NmHJgHegsN6zdwR3HziBI2bPnA0TXkg+5bo2zpO5QprTDZKfJUH/XmimWzQJAYtmplNaID3aEqDnyvNqgtoT7igx31IAEOvyWyxHAavbUP8dupQ0a+rR1R7JklNsYMrvHNmsLkZRbZ/zjSEoAFQJAG8NYfKLKzd7vIwtnB2LDFEaWYAaifDRLXL4wCFlDV9DmtA+zpfktI6QS880aFs504ki/49SnjcHfDXYfRlnmgg==";
-        lklCrossPayEnv.registerEnv(LklEnv.SANDBOX, "DOPCHN000116", privKey, pubKey);
+        String privKey = "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAIY3WUY8sDvOyoQA+UxHYv1ol9l02Q6rqKm/d+PmcrKi5sxAcyBGDuhT7H0aMMadsO/fCYRkVlf599VeQrijASt1GarU4xhnhoVA2gwYhwaVRSLuPsd61yib4jMRbzIbrrbBD+bZyk8KH7YPDb8g+8oNgARPnhX53cdeXeZZftK7AgMBAAECgYEAhRb/fMmTTEs7wHgivYQQYg7EfQsEbirEXkcSALi0xfUJfkLupnMyNyl5WXiOI3WdTc9SZakFgcnK+xa0fNiOv+a6iEqdAjgDG29IdtWNt/A0/vJziO0HwO4Ms6Hbg+x+5mktkk9erCF5078/i3kQODGlHmIJXmojhQwialwv/YECQQDzmbljtxWrWBlv4M614vEyEoaXtY47WJLSHc9HYoPpjEk70BC2dqNLpKxAUHmSAxqwsNcqDsmvShHAqgfFYHT7AkEAjQxGXibr/WHr0BNqZyo7lS7fKmcYrxg8ViHGX+jptcDdYxKPjgR9cAbVYTsiwbrYfSQzdO/Fu4DzMx3UUYMtQQJAS1YDS59XiEIau8reosmopj+seEah0iC2Z1zoub7x5MyJ6YGTaZqPLdmjm9BHiKyFGJfYMx2XqipSCy+Kb7RA+QJANW6v/ZzrC3sb9SBVz60tEy/FdO/HZxVcThjPaKf4WVUtyQlP/rHuvxCnpwTa/t8EgivDnonyszx/ZR7ovtRdwQJBAPAjhrVwjd1ocCt/xBn+TXpdczQI7pulLTyatHM9W/M5ueM5e7upINugZE7ZECow9yFbb9L3dsFcHx4t2eMkGI8=";
+        lklCrossPayEnv.registerEnv(LklEnv.LIVE ,"DOPCHN000030", privKey, pubKey);
     }
 
     /**
@@ -87,6 +87,7 @@ public class LklCrossPayClientTest {
         req.setCertType(CertType.ID.getCode());
         req.setClientId("360000000000000000");
         req.setClientName("孙xx");
+        req.setCustomNumberId("NA");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
         req.setDateOfExpire("1602");
@@ -180,6 +181,7 @@ public class LklCrossPayClientTest {
         req.setClientName("孙xx");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
+        req.setCustomNumberId("NA");
         req.setDateOfExpire("1602");
         req.setMerOrderId("SH20160420194563");
         req.setMobile("15000000000");
@@ -227,6 +229,7 @@ public class LklCrossPayClientTest {
         req.setAccountNumber("6222021001116245702");
         req.setCurrency(LklCurrency.CNY.getCode());
         req.setCvv("123");
+        req.setCustomNumberId("NA");
         req.setDateOfExpire("1602");
         req.setMerOrderId("SH20160430195553");
         req.setMobile("15000000000");
@@ -273,8 +276,8 @@ public class LklCrossPayClientTest {
     @Test
     public void testOrderQuery() {
         OrderQueryReq req = new OrderQueryReq();
-        req.setMerOrderId("SH20160420194553");
-        req.setTransactionId("2016042100084651");
+        req.setMerOrderId("2000819895829253849088");
+        req.setTransactionId("2017011301752692");
 
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setVer("1.0.0");
