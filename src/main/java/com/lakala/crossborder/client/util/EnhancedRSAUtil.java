@@ -18,12 +18,12 @@ public class EnhancedRSAUtil {
     /**
      * RSA最大加密明文大小
      */
-    private static final int MAX_ENCRYPT_BLOCK = 189;
+    private static final int MAX_ENCRYPT_BLOCK = 165;
 
     /**
      * RSA最大解密密文大小
      */
-    private static final int MAX_DECRYPT_BLOCK = 200;
+    private static final int MAX_DECRYPT_BLOCK = 176;
 
     static {
         if (Security.getProvider("BC") == null) {
@@ -40,7 +40,7 @@ public class EnhancedRSAUtil {
     public static KeyPair generateKeyPair() {
         try {
             KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA", "BC");
-            final int KEY_SIZE = 1600;
+            final int KEY_SIZE = 1408;
             keyPairGen.initialize(KEY_SIZE, new SecureRandom());
             KeyPair keyPair = keyPairGen.generateKeyPair();
 
@@ -61,7 +61,7 @@ public class EnhancedRSAUtil {
      */
     public static byte[] encrypt(PublicKey pk, byte[] data) throws Exception {
         try {
-            Cipher cipher = Cipher.getInstance("RSA", "BC");
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
             cipher.init(Cipher.ENCRYPT_MODE, pk);
             int blockSize = cipher.getBlockSize();
             // 获得加密块大小，如：加密前数据为128个byte，而key_size=1024
@@ -101,7 +101,7 @@ public class EnhancedRSAUtil {
      */
     public static byte[] decrypt(PrivateKey pk, byte[] raw) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA", "BC");
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
             cipher.init(Cipher.DECRYPT_MODE, pk);
             int blockSize = cipher.getBlockSize();
             ByteArrayOutputStream bout = new ByteArrayOutputStream(64);
@@ -131,10 +131,10 @@ public class EnhancedRSAUtil {
     public static byte[] encryptByPublicKey(byte[] data, String publicKey) throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
         Key publicK = keyFactory.generatePublic(x509KeySpec);
         // 对数据加密
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
         cipher.init(Cipher.ENCRYPT_MODE, publicK);
         int inputLen = data.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -171,9 +171,9 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
 
         cipher.init(Cipher.DECRYPT_MODE, privateK);
         int inputLen = encryptedData.length;
@@ -212,9 +212,9 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(privateKey);
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
         Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
         cipher.init(Cipher.ENCRYPT_MODE, privateK);
         int inputLen = data.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -252,9 +252,9 @@ public class EnhancedRSAUtil {
             throws Exception {
         byte[] keyBytes = org.apache.commons.codec.binary.Base64.decodeBase64(publicKey);
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA","BC");
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA", "BC");
         Key publicK = keyFactory.generatePublic(x509KeySpec);
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "BC");
         cipher.init(Cipher.DECRYPT_MODE, publicK);
         int inputLen = encryptedData.length;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -275,24 +275,5 @@ public class EnhancedRSAUtil {
         byte[] decryptedData = out.toByteArray();
         out.close();
         return decryptedData;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-
-        // 测试公钥加密，私钥解密
-        String test = "1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer1234qwer";
-        KeyPair keyPair = EnhancedRSAUtil.generateKeyPair();
-        String pubK = new String(Base64.encode(keyPair.getPublic().getEncoded()));
-        String prvK = new String(Base64.encode(keyPair.getPrivate().getEncoded()));
-
-        System.out.println("pubKey:" + pubK);
-        System.out.println("prvKey:" + prvK);
-
-        byte[] en_test = encryptByPublicKey(test.getBytes(), pubK);
-        System.out.println("密文(公钥加密)：" + ByteArrayUtil.byteArray2HexString(en_test));
-        byte[] de_test = decryptByPrivateKey(en_test, prvK);
-//        System.out.println("明文(私钥解密)：" + ByteArrayUtil.byteArray2HexString(de_test));
-        System.out.println("明文(私钥解密)：" + new String(de_test));
     }
 }
