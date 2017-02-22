@@ -36,7 +36,7 @@ public class AESCryptoNew {
 //            secureRandom.setSeed(password.getBytes("utf-8"));
             KeyGenerator kgen = KeyGenerator.getInstance("AES", "BC");
             kgen.init(128);
-            SecretKey secretKey = kgen.generateKey();
+//            SecretKey secretKey = kgen.generateKey();
 //            byte[] enCodeFormat = secretKey.getEncoded();
 //            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
             SecretKeySpec key = new SecretKeySpec(password.getBytes("utf-8"), "AES");
@@ -102,4 +102,19 @@ public class AESCryptoNew {
         return null;
     }
 
+    public static void main(String[] args) throws UnsupportedEncodingException, NoSuchProviderException {
+        String secKey = "BDLLQ2J821P40UNVSSNFSEDUVROW0GDA";
+        System.out.println(secKey);
+
+        String bizJson = "test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文test123中文";
+
+        String encData = ByteArrayUtil.byteArray2HexString(AESCryptoNew.encrypt(bizJson, secKey));
+
+        String str = new String(AESCryptoNew.decrypt(ByteArrayUtil.hexString2ByteArray(encData), "BDLLQ2J821P40UNVSSNFSEDUVROW0GDA"), "GBK");
+
+        System.out.println(encData);
+
+        System.out.println(str);
+
+    }
 }
