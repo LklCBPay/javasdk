@@ -15,7 +15,7 @@ import java.security.Security;
  *
  * @author jiangzhifei jiangzhifei@lakala.com
  */
-public class AES256Crypto {
+public class AESCryptoNew {
 
     static {
         if (Security.getProvider("BC") == null) {
@@ -35,7 +35,7 @@ public class AES256Crypto {
 //            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
 //            secureRandom.setSeed(password.getBytes("utf-8"));
             KeyGenerator kgen = KeyGenerator.getInstance("AES", "BC");
-            kgen.init(256);
+            kgen.init(128);
             SecretKey secretKey = kgen.generateKey();
 //            byte[] enCodeFormat = secretKey.getEncoded();
 //            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
@@ -76,7 +76,7 @@ public class AES256Crypto {
 //            secureRandom.setSeed(password.getBytes("utf-8"));
 
             KeyGenerator kgen = KeyGenerator.getInstance("AES", "BC");
-            kgen.init(256);
+            kgen.init(128);
 //            SecretKey secretKey = kgen.generateKey();
 //            byte[] enCodeFormat = secretKey.getEncoded();
             SecretKeySpec key = new SecretKeySpec(password.getBytes("utf-8"), "AES");
