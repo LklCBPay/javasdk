@@ -80,6 +80,7 @@ req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
 req.setCertType(CertType.ID.getCode());
 req.setClientId("321000000000000000");
 req.setClientName("孙XX");
+//商户会员号,没有填"NA"
 req.setCustomNumberId("NA");
 req.setCurrency(LklCurrency.CNY.getCode());
 req.setCvv("123");
@@ -161,6 +162,7 @@ req.setBusiCode(CrossBorderBizType.STUDY_ABROAD_YEAR_BELOW.getCode());
 req.setCertType(CertType.ID.getCode());
 req.setClientId("321000000000000000");
 req.setClientName("孙XX");
+//商户会员号,没有填"NA"
 req.setCustomNumberId("NA");
 req.setCurrency(LklCurrency.CNY.getCode());
 req.setCvv("123");
@@ -204,6 +206,7 @@ req.setBgUrl("http://merchantDomain:port/merchantApplicationContext/lklpayResult
 req.setCertType(CertType.ID.getCode());
 req.setClientId("360000000000000000");
 req.setAccountName("孙xx");
+//商户会员号,没有填"NA"
 req.setCustomNumberId("NA");
 req.setAccountNumber("6222000000000000000");
 req.setCurrency(LklCurrency.CNY.getCode());
