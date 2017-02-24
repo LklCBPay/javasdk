@@ -24,7 +24,7 @@
 #连接超时时间，毫秒
 connectTimeout=15000
 #读超时时间，毫秒
-readTimeout=15000
+readTimeout=2*60000
 #http连接池最大连接数
 maxTotal=200
 #每个route的连接数
