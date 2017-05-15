@@ -653,11 +653,14 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
        　　 head.setTs(DateUtil.getCurrentTime());
         　　head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
 
-        　　try {
+           try {
            　　 CustomAuthQueryRes customAuthQueryRes = customAuthClient.queryCustomAuth(queryCustomAuthReq, head);
            　　 logger.info("海关认证订单查询结果结果{},msg={}", new String[]{customAuthQueryRes.getRetCode(),         customAuthQueryRes.getRetMsg()});
            　　 logger.info("海关受理结果:"+customAuthQueryRes.getStatus());
        　　 } catch (LklClientException e) {
             logger.error("海关认证订单查询异常", e);
 			｝
+```
+### 海关认证后台通知：
+        demo中的CustomAuthResultWebHook方法是接收后台通知的实例；
 ```
