@@ -607,3 +607,57 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
 
 该接口对应的url为:``` 商户域名:端口/商户应用上下文/lklBatTrade/webHook```。请事先在拉卡拉跨境支付商户自助服务平台中注册回调地址。
 如需自己实现回调处理流程，可参照BatchTradeWebHook自行实现;BatTradeWebHook为回调业务处理示例
+
+
+## 海关认证
+
+### 海关认证接口
+
+```java
+		
+		 CustomAuthReq customAuthReq = new CustomAuthReq();
+	        customAuthReq.setAmount("1.00");
+	        customAuthReq.setBgUrl("http://127.0.0.1:8080/ppayTestMer/CustomAuthReturnServlet");
+	        customAuthReq.setBizTypeCode("");
+	        customAuthReq.setClientId("360430199210171861");
+	        customAuthReq.setCbpName("宁波海关");
+	        customAuthReq.setCuId("3");
+	        customAuthReq.setCustomcomCode("111111");
+	        customAuthReq.setGoodsFee("");
+	        customAuthReq.setMobile("18770091879");
+	        customAuthReq.setName("张三");
+	        customAuthReq.setOrderNo("SH20170511175909");
+	        customAuthReq.setOrderNote("");
+	        customAuthReq.setPayerMail("hsufdh@126.com");
+	        customAuthReq.setPayOrderId("20170511175909");
+	        customAuthReq.setTaxFee("");
+	        LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+	        head.setVer("3.0.0");
+	        head.setTs(DateUtil.getCurrentTime());
+	        head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+	        try {
+	            CustomAuthRes customAuthRes = customAuthClient.customAuth(customAuthReq, head);
+	            logger.info("海关认证结果{},msg={}", new String[]{customAuthRes.getRetCode(), customAuthRes.getRetMsg()});
+	        } catch (LklClientException e) {
+	            logger.error("海关认证异常", e);
+	        }
+```
+
+###　海关认证查询接口
+```java
+　　　　　   CustomAuthQueryReq queryCustomAuthReq = new CustomAuthQueryReq();
+       　　 queryCustomAuthReq.setOrderNo("SH20170511175909");
+        　　LklCrossPaySuperReq head = new LklCrossPaySuperReq();
+        　　head.setVer("3.0.0");
+       　　 head.setTs(DateUtil.getCurrentTime());
+        　　head.setMerId(LklCrossPayEnv.getEnvConfig().getMerId());
+
+        　　try {
+           　　 CustomAuthQueryRes customAuthQueryRes = customAuthClient.queryCustomAuth(queryCustomAuthReq, head);
+           　　 logger.info("海关认证订单查询结果结果{},msg={}", new String[]{customAuthQueryRes.getRetCode(),         customAuthQueryRes.getRetMsg()});
+           　　 logger.info("海关受理结果:"+customAuthQueryRes.getStatus());
+       　　 } catch (LklClientException e) {
+            logger.error("海关认证订单查询异常", e);
+			｝
+```
