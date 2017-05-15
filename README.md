@@ -644,7 +644,7 @@ public class BatTradeWebHook implements WebHookHandler<BatchTradeNotify> {
 	        }
 ```
 
-###　海关认证查询接口
+### 海关认证接口
 ```java
 　　　　　   CustomAuthQueryReq queryCustomAuthReq = new CustomAuthQueryReq();
        　　 queryCustomAuthReq.setOrderNo("SH20170511175909");
