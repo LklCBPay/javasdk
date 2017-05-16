@@ -38,9 +38,10 @@ public class CustomAuthClientTest {
 	    @org.junit.Test
 	    public void testCustomAuth() {
 	        CustomAuthReq customAuthReq = new CustomAuthReq();
-	        customAuthReq.setAmount("1.00");
+	        customAuthReq.setAmount("100");
 	        customAuthReq.setBgUrl("http://127.0.0.1:8080/ppayTestMer/CustomAuthReturnServlet");
 	        customAuthReq.setBizTypeCode("");
+	        customAuthReq.setClientType("0");//0代表身份证号
 	        customAuthReq.setClientId("360430199210171861");
 	        customAuthReq.setCbpName("宁波海关");
 	        customAuthReq.setCuId("3");
