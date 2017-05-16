@@ -25,6 +25,8 @@ public class CustomAuthRes extends LklCrossPaySuperRes{
 	
 	private String clientId;//身份证号
 	
+	private String clientType;//证件类型
+	
 	private String payerMail;//邮箱
 	
 	private String bgUrl;//后台通知地址
@@ -36,6 +38,14 @@ public class CustomAuthRes extends LklCrossPaySuperRes{
 	private String bizTypeCode;//业务类型
 	
 	private String orderNote;//订单备注
+
+	public String getClientType() {
+		return clientType;
+	}
+
+	public void setClientType(String clientType) {
+		this.clientType = clientType;
+	}
 
 	public String getOrderNo() {
 		return orderNo;
