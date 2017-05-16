@@ -6,7 +6,16 @@ public class CustomAuthQueryRes extends LklCrossPaySuperRes{
 
 	private static final long serialVersionUID = 1627663082608774833L;
 	private String orderNo;
+	private String payOrderId;
+	public String getPayOrderId() {
+		return payOrderId;
+	}
+	public void setPayOrderId(String payOrderId) {
+		this.payOrderId = payOrderId;
+	}
 	private String status;
+	
+	
 	public String getOrderNo() {
 		return orderNo;
 	}
