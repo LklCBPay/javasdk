@@ -38,6 +38,7 @@ public class QueryCustomAuthTest {
     public void testQueryCustomAuth() {
         CustomAuthQueryReq queryCustomAuthReq = new CustomAuthQueryReq();
         queryCustomAuthReq.setOrderNo("SH20170511175909");
+        queryCustomAuthReq.setPayOrderId("20170511175909");
         LklCrossPaySuperReq head = new LklCrossPaySuperReq();
         head.setVer("3.0.0");
         head.setTs(DateUtil.getCurrentTime());
